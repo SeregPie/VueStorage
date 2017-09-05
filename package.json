@@ -1,0 +1,31 @@
+{
+	"name": "vuestorage",
+	"version": "17.9.5",
+	"description": "vue storage",
+	"main": "VueStorage.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/SeregPie/VueStorage.git"
+	},
+	"keywords": [
+		"vue",
+		"storage",
+		"local",
+		"session",
+		"global",
+		"share",
+		"store",
+		"reactive",
+		"properties",
+		"data"
+	],
+	"author": "Sergej Sintschilin",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/SeregPie/VueStorage/issues"
+	},
+	"homepage": "https://github.com/SeregPie/VueStorage#readme",
+	"dependencies": {
+		"vue": "^2.4.2"
+	}
+}
