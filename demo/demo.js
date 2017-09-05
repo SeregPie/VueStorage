@@ -3,27 +3,45 @@
 	new Vue({
 		el: '#a',
 
-		data: {
-			storedString: '',
-			storedNumber: 0,
+		storedProps: {
+			storedString: {
+				type: String,
+				default: '',
+			},
+			storedNumber: {
+				type: Number,
+				default: 0,
+			},
 		},
 	});
 
 	new Vue({
 		el: '#b',
 
-		data: {
-			storedNumber: 0,
-			storedBoolean: false,
+		storedProps: {
+			storedNumber: {
+				type: Number,
+				default: 0,
+			},
+			storedBoolean: {
+				type: Boolean,
+				default: false,
+			},
 		},
 	});
 
 	new Vue({
 		el: '#c',
 
-		data: {
-			storedString: '',
-			storedBoolean: false,
+		storedProps: {
+			storedString: {
+				type: String,
+				default: '',
+			},
+			storedBoolean: {
+				type: Boolean,
+				default: false,
+			},
 		},
 	});
 

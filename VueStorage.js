@@ -11,28 +11,52 @@
 	let mixin = {
 		data() {
 			let data = {};
-			if (this.$options[optionKey]) {
-				let {type = 'local', keyPrefix = '', props = {}} = this.$options[optionKey];
-				let storage = (type === 'session') ? sessionStorage : localStorage;
+			let storedProps = this.$options.storedProps;
+			if (storedProps) {
 				let watch = {};
-				for (let [name, options] of Object.entries(props)) {
-					data[name] = storage.getItem(name);
-					this.$watch(name, function(value) {
-						storage.setItem(name, ''+value);
-					}, {deep: true});
+				for (let [key, prop] of Object.entries(storedProps)) {
+					let type = prop.type;
+					let defaultValue = prop.default;
+					let value = localStorage.getItem(key);
+					if (value === null) {
+						value = defaultValue;
+					} else {
+						switch (type) {
+							case Number: {
+								value = parseFloat(value);
+								break;
+							}
+							case Boolean: {
+								value = !!parseInt(value);
+								break;
+							}
+						}
+					}
+					data[key] = value;
+					watch[key] = function(value) {
+						switch (type) {
+							case Number: {
+								value = ''+value;
+								break;
+							}
+							case Boolean: {
+								value = ''+(value ? 1 : 0);
+								break;
+							}
+						}
+						localStorage.setItem(key, value);
+					};
+					console.log(data, watch);
 				}
+				data._storageWatch = watch;
 			}
 			return data;
 		},
 
 		created() {
-			if (this.$options[name]) {
-				let {type = 'local', prefix = '', props = {}} = this.$options[name];
-				let storage = (type === 'session') ? sessionStorage : localStorage;
-				for (let [name, options] of Object.entries(props)) {
-					this.$watch(name, function(value) {
-						storage.setItem(name, ''+value);
-					}, {deep: true});
+			if (this._data._storageWatch) {
+				for (let [key, hander] of Object.entries(this._data._storageWatch)) {
+					this.$watch(key, hander, {deep: true});
 				}
 			}
 		},
