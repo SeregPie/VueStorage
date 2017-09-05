@@ -6,6 +6,8 @@
 
 new Vue({
 
+  /*...*/
+
   storage: {
     type: 'session',
     prefix: 'app:',
