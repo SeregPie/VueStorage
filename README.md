@@ -4,49 +4,79 @@
 
 ```js
 
+{
+
+	storedData: {
+		value: {
+			key: 'abc',
+			default() {
+				return undefined;
+			},
+			type: String,
+			parse() {
+
+			},
+			stringify() {
+
+			},
+			get() {
+
+			},
+			set() {
+
+			},
+		},
+	},
+
+}
+
+```
+
+
+```js
+
 new Vue({
 
-  /*...*/
+	/*...*/
 
-  storage: {
-    type: 'session',
-    prefix: 'app:',
-    props: {
-      locale: {
-        type: String,
-        default() {
-          return navigator.language;
-        },
-        key: 'i18n',
-      },
-      authorization: Object,
-    },
-  },
+	storedData: {
+		locale: {
+			type: String,
+			default() {
+				return navigator.language;
+			},
+		},
 
-  watch: {
-    locale: {
-      handler(value) {
-        this.$i18n.locale = value;
-      },
-      immediate: true,
-    },
+		authorization: {
+			type: Object,
+			key: 'github.com/authorization',
+		},
+	},
 
-    authorization: {
-      handler(value) {
-        if (value) {
-          let {type, credentials} = value;
-          this.$http.headers.common['Authorization'] = `${type} ${credentials}`;
-        } else {
-          this.$http.headers.common['Authorization'] = null;
-        }
-      },
-      immediate: true,
-    },
-  },
+	watch: {
+		locale: {
+			handler(value) {
+				this.$i18n.locale = value;
+			},
+			immediate: true,
+		},
 
-  i18n: new VueI18n({fallbackLocale: 'en'}),
+		authorization: {
+			handler(value) {
+				if (value) {
+					let {type, credentials} = value;
+					this.$http.headers.common['Authorization'] = `${type} ${credentials}`;
+				} else {
+					this.$http.headers.common['Authorization'] = null;
+				}
+			},
+			immediate: true,
+		},
+	},
 
-  http: {root: '/root'},
+	i18n: new VueI18n({fallbackLocale: 'en'}),
+
+	http: {root: '/root'},
 
 });
 
