@@ -5,25 +5,90 @@
 ```js
 
 {
+	storedData: {
+		colorPalette: {
+			type: Array,
+			default: ['Red', 'Green', 'Blue'],
+		},
+		aaa: {
+			type: Boolean,
+			key: 'aaafsfsdfsd',
+			default: false,
+		},
+	},
+
+}
+
+```
+
+---
+
+```js
+
+{
+	props: {
+		userId: Number,
+		userName: String,
+	},
+	storedData: {
+		displayedName: {
+			key() {
+				return `app/users/${this.userId}/name`;
+			},
+			default() {
+				return this.userName;
+			},
+		},
+	},
+
+}
+
+```
+
+---
+
+```js
+
+{
+	storedData: {
+		fancyNumbers: {
+			type: {
+				parse(v) {
+					return v.split('|').map(v => parseInt(v));
+				},				
+				stringify(v) {
+					return v.join('|');
+				},
+			},
+			default: [],
+		},
+	},
+}
+
+```
+
+---
+
+```js
+
+{
 
 	storedData: {
-		value: {
-			key: 'abc',
-			default() {
-				return undefined;
-			},
-			type: String,
-			parse() {
-
-			},
-			stringify() {
-
-			},
-			get() {
-
-			},
-			set() {
-
+		saveState: {
+			type: Object,
+			computed: {
+				get() {
+					return {
+						health: this.health,
+						ammo: this.ammo,
+						level: this.level,
+					};
+				},
+				set({health = 100, ammo = 0, level = 1} = {}) {
+					this.health = health;
+					this.ammo = ammo;
+					this.level = level;
+				},
 			},
 		},
 	},
@@ -41,7 +106,15 @@ new Vue({
 
 	storedData: {
 		locale: {
-			type: String,
+			type: String,			
+			computed: {
+				get() {
+					return this.$i18n.locale;
+				},
+				set(value) {
+					this.$i18n.locale = value;
+				},
+			},
 			default() {
 				return navigator.language;
 			},
@@ -54,13 +127,6 @@ new Vue({
 	},
 
 	watch: {
-		locale: {
-			handler(value) {
-				this.$i18n.locale = value;
-			},
-			immediate: true,
-		},
-
 		authorization: {
 			handler(value) {
 				if (value) {
