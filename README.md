@@ -32,17 +32,17 @@ Include the code in your page via a CDN.
 
 {
 	storedData: {
+		aaa: String,
 		colorPalette: {
 			type: Array,
 			default: ['Red', 'Green', 'Blue'],
-		},
-		aaa: {
+		},		
+		bbb: {
 			type: Boolean,
-			key: 'aaafsfsdfsd',
+			key: 'ccc',
 			default: false,
 		},
 	},
-
 }
 
 ```
@@ -57,7 +57,7 @@ Include the code in your page via a CDN.
 		userName: String,
 	},
 	storedData: {
-		displayedName: {
+		displayedUserName: {
 			key() {
 				return `app/users/${this.userId}/name`;
 			},
@@ -66,7 +66,6 @@ Include the code in your page via a CDN.
 			},
 		},
 	},
-
 }
 
 ```
@@ -80,7 +79,7 @@ Include the code in your page via a CDN.
 		fancyNumbers: {
 			type: {
 				parse(v) {
-					return v.split('|').map(v => parseInt(v));
+					return v.split('|').map(v => Number.parseInt(v));
 				},
 				stringify(v) {
 					return v.join('|');
@@ -98,78 +97,38 @@ Include the code in your page via a CDN.
 ```js
 
 {
-
+	data() {
+		return {
+			level: 1,
+			health: 100,
+			ammo: 0,			
+		};
+	},	
 	storedData: {
 		saveState: {
 			type: Object,
 			computed: {
 				get() {
 					return {
-						health: this.health,
-						ammo: this.ammo,
 						level: this.level,
+						health: this.health,
+						ammo: this.ammo,						
 					};
 				},
-				set({health = 100, ammo = 0, level = 1} = {}) {
-					this.health = health;
-					this.ammo = ammo;
+				set({level, health, ammo}) {
 					this.level = level;
+					this.health = health;
+					this.ammo = ammo;					
 				},
 			},
 		},
-	},
-
-}
-
-```
-
-
-```js
-
-new Vue({
-
-	/*...*/
-
-	storedData: {
-		locale: {
-			type: String,
-			computed: {
-				get() {
-					return this.$i18n.locale;
-				},
-				set(value) {
-					this.$i18n.locale = value;
-				},
-			},
-			default() {
-				return navigator.language;
-			},
-		},
-
-		authorization: {
-			type: Object,
-			key: 'github.com/authorization',
-		},
-	},
-
+	},	
 	watch: {
-		authorization: {
-			handler(value) {
-				if (value) {
-					let {type, credentials} = value;
-					this.$http.headers.common['Authorization'] = `${type} ${credentials}`;
-				} else {
-					this.$http.headers.common['Authorization'] = null;
-				}
-			},
+		saveState: {
+			handler() {},
 			immediate: true,
 		},
 	},
-
-	i18n: new VueI18n({fallbackLocale: 'en'}),
-
-	http: {root: '/root'},
-
-});
+}
 
 ```
