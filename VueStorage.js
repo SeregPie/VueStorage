@@ -6,6 +6,15 @@
 	}
 }).call(this, function() {
 
+/*
+$(window).on('storage', peka2tv.storage_event_listener);
+_storage_event_listener(event) {
+			if (event.originalEvent.key === this._storage_key) {
+				this._reload();
+			}
+		},
+*/
+
 	let optionKey = 'storage';
 
 	let parseString = function(value) {
@@ -89,12 +98,33 @@
 			return data;
 		},
 
-		created() {
+		beforeCreate() {
 			if (this._data._storageWatch) {
 				for (let [key, hander] of Object.entries(this._data._storageWatch)) {
 					this.$watch(key, hander, {deep: true});
 				}
 			}
+		},
+
+		destroyed() {
+
+		},
+
+		computed: {
+			storedValue: {
+				get() {
+					let value = globalValue;
+					if (value === undefined) {
+						value = parse(storage.load(key));
+					}
+				},
+				set(value) {
+					globalValue = value;
+					value = stringify(value);
+					storage.save(value);
+
+				},
+			},
 		},
 	};
 

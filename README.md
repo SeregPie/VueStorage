@@ -1,5 +1,31 @@
 # VueStorage
 
+## dependencies
+
+- [Vue](https://github.com/vuejs/vue)
+
+## setup
+
+Install the [package](https://www.npmjs.com/package/vuestorage) via npm.
+
+```sh
+
+npm install vuestorage
+
+```
+
+---
+
+Include the code in your page via a CDN.
+
+```html
+
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vuestorage"></script>
+<script>Vue.use(VueStorage)</script>
+
+```
+
 ## usage
 
 ```js
@@ -55,7 +81,7 @@
 			type: {
 				parse(v) {
 					return v.split('|').map(v => parseInt(v));
-				},				
+				},
 				stringify(v) {
 					return v.join('|');
 				},
@@ -106,7 +132,7 @@ new Vue({
 
 	storedData: {
 		locale: {
-			type: String,			
+			type: String,
 			computed: {
 				get() {
 					return this.$i18n.locale;

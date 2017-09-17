@@ -3,22 +3,57 @@
 	new Vue({
 		el: '#a',
 
-		storedData: {
-			storedString: {
-				type: String,
-				default: '',
+		props: {
+		},
+
+		data: {
+			storedNumber: 0,
+			$storage: {
+				storedString: {
+					value: undefined,
+					default: '',
+					key: 'app/storedString',
+				},
 			},
-			storedNumber: {
-				type: Number,
-				default: 0,
-			},
+		},
+
+		computed: {
+			storedString: (function() {
+				let ooo = {
+					key() {
+						return `app/${this.storedNumber}/string`;
+					},
+					value: undefined,
+					default() {
+						return 'dummy';
+					},
+				};
+
+				return {
+					get() {
+						let key = ooo.key.call(this);
+						let value = localStorage[key];
+						console.log(value);
+						if (value === undefined) {
+							value = ooo.default.call(this);
+						}
+						return value;
+					},
+
+					set(value) {
+						let key = ooo.key.call(this);
+						localStorage[key] = value;
+
+					},
+				};
+			})(),
 		},
 	});
 
 	new Vue({
 		el: '#b',
 
-		storedData: {
+		props: {
 			storedNumber: {
 				type: Number,
 				default: 0,
@@ -33,7 +68,7 @@
 	new Vue({
 		el: '#c',
 
-		storedData: {
+		props: {
 			storedString: {
 				type: String,
 				default: '',
