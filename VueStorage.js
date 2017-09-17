@@ -8,13 +8,49 @@
 
 	let optionKey = 'storage';
 
+	let parseString = function(value) {
+		return ''+value;
+	};
+
+	let stringifyString = function(value) {
+		return ''+value;
+	};
+
+	let parseNumber = function(value) {
+		return Number.parseFloat(value);
+	};
+
+	let stringifyNumber = stringifyString;
+
+	let parseBoolean = function(value) {
+		return !!parseNumber(value);
+	};
+
+	let stringifyBoolean = function(value) {
+		return stringifyNumber(value ? 1 : 0);
+	};
+
+	let parseObject = function(value) {
+		return JSON.parse(value);
+	};
+
+	let stringifyObject = function(value) {
+		return JSON.stringify(value);
+	};
+
+	let parseArray = function(value) {
+		return JSON.parse(value);
+	};
+
+	let stringifyArray = stringifyObject;
+
 	let mixin = {
 		data() {
 			let data = {};
-			let storedProps = this.$options.storedProps;
-			if (storedProps) {
+			let storedData = this.$options.storedData;
+			if (storedData) {
 				let watch = {};
-				for (let [key, prop] of Object.entries(storedProps)) {
+				for (let [key, v] of Object.entries(storedData)) {
 					let type = prop.type;
 					let defaultValue = prop.default;
 					let value = localStorage.getItem(key);

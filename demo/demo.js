@@ -3,7 +3,7 @@
 	new Vue({
 		el: '#a',
 
-		storedProps: {
+		storedData: {
 			storedString: {
 				type: String,
 				default: '',
@@ -18,7 +18,7 @@
 	new Vue({
 		el: '#b',
 
-		storedProps: {
+		storedData: {
 			storedNumber: {
 				type: Number,
 				default: 0,
@@ -33,7 +33,7 @@
 	new Vue({
 		el: '#c',
 
-		storedProps: {
+		storedData: {
 			storedString: {
 				type: String,
 				default: '',
