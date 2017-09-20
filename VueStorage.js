@@ -6,16 +6,31 @@
 	}
 }).call(this, function() {
 
-/*
-$(window).on('storage', peka2tv.storage_event_listener);
-_storage_event_listener(event) {
-			if (event.originalEvent.key === this._storage_key) {
-				this._reload();
-			}
-		},
-*/
+	let Reflect_isNil = function(value) {
+		return value === null || value === undefined;
+	};
 
-	let optionKey = 'storage';
+	let Object_isObject = function(value) {
+		return value && typeof value === 'object';
+	};
+
+	let Object_hasOwn = function(object, key) {
+		Object.prototype.hasOwnProperty.call(object, key);
+	};
+
+	let Function_isFunction = function(value) {
+		return typeof value === 'function';
+	};
+
+	let Function_constant = function(value) {
+		return function() {
+			return value;
+		};
+	};
+
+	let Function_stubNull = Function_constant(null);
+
+
 
 	let parseString = function(value) {
 		return ''+value;
@@ -47,11 +62,152 @@ _storage_event_listener(event) {
 		return JSON.stringify(value);
 	};
 
-	let parseArray = function(value) {
-		return JSON.parse(value);
-	};
+	let parseArray = parseObject;
 
 	let stringifyArray = stringifyObject;
+
+	let storedDataTypeString = {
+		parse: parseString,
+		stringify: stringifyString,
+	};
+
+	let storedDataTypeNumber = {
+		parse: parseNumber,
+		stringify: stringifyNumber,
+	};
+
+	let storedDataTypeBoolean = {
+		parse: parseBoolean,
+		stringify: stringifyBoolean,
+	};
+
+	let storedDataTypeObject = {
+		parse: parseObject,
+		stringify: stringifyObject,
+	};
+
+	let storedDataTypeArray = {
+		parse: parseArray,
+		stringify: stringifyArray,
+	};
+
+	let defaultStoredDataType = storedDataTypeString;
+
+	let normalizeStoredDataType = function(value) {
+		if (Reflect_isNil(value)) {
+			return defaultStoredDataType;
+		}
+		switch (value) {
+			case String:
+				return storedDataTypeString;
+			case Number:
+				return storedDataTypeNumber;
+			case Boolean:
+				return storedDataTypeBoolean;
+			case Object:
+				return storedDataTypeObject;
+			case Array:
+				return storedDataTypeArray;
+		}
+		if (Object_isObject(value)) {
+			if (Function_isFunction(value.parse) && Function_isFunction(value.stringify)) {
+				return {
+					parse: value.parse,
+					stringify: value.stringify,
+				};
+			}
+		}
+		return defaultStoredDataType;
+	};
+
+	let defaultStoredDataDefault = Function_stubNull;
+
+	let normalizeStoredDataDefault = function(value) {
+		if (Reflect_isNil(value)) {
+			return defaultStoredDataDefault;
+		}
+		if (Function_isFunction(value)) {
+			return value;
+		}
+		return Function_constant(value);
+	};
+
+	let normalizeStoredDataKey = function(value) {
+		if (Reflect_isNil(value)) {
+			return defaultStoredDataDefault;
+		}
+		if (Function_isFunction(value)) {
+			return value;
+		}
+		return Function_constant(value);
+	};
+
+
+	let defaultStoredDataConfig = {
+		type: defaultStoredDataType,
+		default: defaultStoredDataDefault,
+	};
+
+	let normalizeStoredDataConfig = function(config, dataKey) {
+		let defaultType = {
+
+		};
+
+		let defaultDefault = Function_stubNull;
+
+		let defaultConfig = {
+			type: defaultType,
+			default: defaultDefault,
+		};
+
+		return function(config) {
+			if (Reflect_isNil(config)) {
+				return defaultStoredDataConfig;
+			}
+		};
+	};
+
+	let normalizeStoredData = function() {
+
+	};
+
+
+	let vueStorage = new Vue({
+		data: {
+			items: {},
+		},
+		methods: {
+			getItem(key) {
+				if (!Object_hasOwn(this.items, key)) {
+					let value = localStorage.getItem(key);
+					if (Reflect_isNil(value)) {
+						value = null;
+					}
+					Vue.set(this.items, key, value);
+				}
+				return this.items[key];
+			},
+
+			_setItem(key, value) {
+				if (Reflect_isNil(value)) {
+					value = null;
+				}
+				Vue.set(this.items, key, value);
+			},
+
+			setItem(key, value) {
+				if (Reflect_isNil(value)) {
+					localStorage.removeItem(key);
+				} else {
+					localStorage.setItem(key, value);
+				}
+				this._setItem(key, value);
+			},
+		}
+	});
+
+	let optionKey = 'storage';
+
 
 	let mixin = {
 		data() {
@@ -99,6 +255,12 @@ _storage_event_listener(event) {
 		},
 
 		beforeCreate() {
+			let storedData = this.$options.storedData;
+			if (storedData) {
+				for (let [key, hander] of Object.entries(storedData)) {
+					this.$watch(key, hander, {deep: true});
+				}
+			}
 			if (this._data._storageWatch) {
 				for (let [key, hander] of Object.entries(this._data._storageWatch)) {
 					this.$watch(key, hander, {deep: true});
