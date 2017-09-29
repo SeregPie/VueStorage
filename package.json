@@ -1,8 +1,8 @@
 {
 	"name": "vuestorage",
-	"version": "17.9.5",
+	"version": "17.9.29",
 	"description": "vue storage",
-	"main": "VueStorage.js",
+	"main": "VueStorage.min.js",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/SeregPie/VueStorage.git"
@@ -26,6 +26,6 @@
 	},
 	"homepage": "https://github.com/SeregPie/VueStorage#readme",
 	"dependencies": {
-		"vue": "^2.4.2"
+		"vue": "^2.4.4"
 	}
 }

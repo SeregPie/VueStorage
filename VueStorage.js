@@ -1,10 +1,10 @@
 (function(factory) {
 	if (typeof module !== 'undefined' && typeof exports !== 'undefined' && this === exports) {
-		module.exports = factory();
+		module.exports = factory(require('vue'));
 	} else {
-		this.VueStorage = factory();
+		this.VueStorage = factory(this.Vue);
 	}
-}).call(this, function() {
+}).call(this, function(Vue) {
 
 	let Reflect_isNil = function(value) {
 		return value === null || value === undefined;
@@ -22,272 +22,213 @@
 		return typeof value === 'function';
 	};
 
-	let Function_constant = function(value) {
-		return function() {
-			return value;
-		};
+
+
+	let _getStorageKey = function(def, key) {
+		let returns;
+		if (Function_isFunction(def.key)) {
+			returns = def.key.call(this);
+		}
+		if (Reflect_isNil(returns)) {
+			returns = key;
+		}
+		// keyPrefix
+		return returns;
 	};
 
-	let Function_stubNull = Function_constant(null);
+
+
+	let _getDefaultValue = function(def) {
+		if (Function_isFunction(def.default)) {
+			return def.default.call(this);
+		}
+	};
 
 
 
-	let parseString = function(value) {
+	let _parseString = function(value) {
 		return ''+value;
 	};
 
-	let stringifyString = function(value) {
+	let _stringifyString = function(value) {
 		return ''+value;
 	};
 
-	let parseNumber = function(value) {
+	let _parseNumber = function(value) {
 		return Number.parseFloat(value);
 	};
 
-	let stringifyNumber = stringifyString;
+	let _stringifyNumber = _stringifyString;
 
-	let parseBoolean = function(value) {
-		return !!parseNumber(value);
+	let _parseBoolean = function(value) {
+		return !!_parseNumber(value);
 	};
 
-	let stringifyBoolean = function(value) {
-		return stringifyNumber(value ? 1 : 0);
+	let _stringifyBoolean = function(value) {
+		return _stringifyNumber(value ? 1 : 0);
 	};
 
-	let parseObject = function(value) {
+	let _parseObject = function(value) {
 		return JSON.parse(value);
 	};
 
-	let stringifyObject = function(value) {
+	let _stringifyObject = function(value) {
 		return JSON.stringify(value);
 	};
 
-	let parseArray = parseObject;
+	let _parseArray = _parseObject;
 
-	let stringifyArray = stringifyObject;
+	let _stringifyArray = _stringifyObject;
 
-	let storedDataTypeString = {
-		parse: parseString,
-		stringify: stringifyString,
-	};
-
-	let storedDataTypeNumber = {
-		parse: parseNumber,
-		stringify: stringifyNumber,
-	};
-
-	let storedDataTypeBoolean = {
-		parse: parseBoolean,
-		stringify: stringifyBoolean,
-	};
-
-	let storedDataTypeObject = {
-		parse: parseObject,
-		stringify: stringifyObject,
-	};
-
-	let storedDataTypeArray = {
-		parse: parseArray,
-		stringify: stringifyArray,
-	};
-
-	let defaultStoredDataType = storedDataTypeString;
-
-	let normalizeStoredDataType = function(value) {
-		if (Reflect_isNil(value)) {
-			return defaultStoredDataType;
-		}
-		switch (value) {
+	let _parseValue = function(def, value) {
+		switch (def) {
 			case String:
-				return storedDataTypeString;
+				return _parseString(value);
 			case Number:
-				return storedDataTypeNumber;
+				return _parseNumber(value);
 			case Boolean:
-				return storedDataTypeBoolean;
+				return _parseBoolean(value);
 			case Object:
-				return storedDataTypeObject;
+				return _parseObject(value);
 			case Array:
-				return storedDataTypeArray;
+				return _parseArray(value);
 		}
-		if (Object_isObject(value)) {
-			if (Function_isFunction(value.parse) && Function_isFunction(value.stringify)) {
-				return {
-					parse: value.parse,
-					stringify: value.stringify,
-				};
-			}
+		if (Object_isObject(def) && Function_isFunction(def.parse)) {
+			return def.parse.call(this, value);
 		}
-		return defaultStoredDataType;
+		return _parseString(value);
 	};
 
-	let defaultStoredDataDefault = Function_stubNull;
-
-	let normalizeStoredDataDefault = function(value) {
-		if (Reflect_isNil(value)) {
-			return defaultStoredDataDefault;
+	let _stringifyValue = function(def, value) {
+		switch (def) {
+			case String:
+				return _stringifyString(value);
+			case Number:
+				return _stringifyNumber(value);
+			case Boolean:
+				return _stringifyBoolean(value);
+			case Object:
+				return _stringifyObject(value);
+			case Array:
+				return _stringifyArray(value);
 		}
-		if (Function_isFunction(value)) {
-			return value;
+		if (Object_isObject(def) && Function_isFunction(def.stringify)) {
+			return def.stringify.call(this, value);
 		}
-		return Function_constant(value);
-	};
-
-	let normalizeStoredDataKey = function(value) {
-		if (Reflect_isNil(value)) {
-			return defaultStoredDataDefault;
-		}
-		if (Function_isFunction(value)) {
-			return value;
-		}
-		return Function_constant(value);
+		return _stringifyString(value);
 	};
 
 
-	let defaultStoredDataConfig = {
-		type: defaultStoredDataType,
-		default: defaultStoredDataDefault,
-	};
 
-	let normalizeStoredDataConfig = function(config, dataKey) {
-		let defaultType = {
-
-		};
-
-		let defaultDefault = Function_stubNull;
-
-		let defaultConfig = {
-			type: defaultType,
-			default: defaultDefault,
-		};
-
-		return function(config) {
-			if (Reflect_isNil(config)) {
-				return defaultStoredDataConfig;
-			}
-		};
-	};
-
-	let normalizeStoredData = function() {
-
-	};
-
-
-	let vueStorage = new Vue({
+	let _reactiveStorage = new Vue({
 		data: {
 			items: {},
 		},
+
+		created() {
+			window.addEventListener('storage', this.StorageEventListener);
+		},
+
+		destroyed() {
+			window.removeEventListener('storage', this.StorageEventListener);
+		},
+
+		computed: {
+			StorageEventListener() {
+				return this.onStorage.bind(this);
+			},
+		},
+
 		methods: {
+			onStorage(event) {
+				this.swssvicz(event.key, event.newValue);
+			},
+
 			getItem(key) {
-				if (!Object_hasOwn(this.items, key)) {
-					let value = localStorage.getItem(key);
-					if (Reflect_isNil(value)) {
-						value = null;
-					}
-					Vue.set(this.items, key, value);
+				if (!this.deudvorv(key)) {
+					this.jnfqybxp(key);
 				}
+				return this.cvsigybq(key);
+			},
+
+			setItem(key, value) {
+				this.hgegcsjt(key, value);
+				this.swssvicz(key, value);
+			},
+
+			deudvorv(key) {
+				return Object_hasOwn(this.items, key);
+			},
+
+			cvsigybq(key) {
 				return this.items[key];
 			},
 
-			_setItem(key, value) {
+			jnfqybxp(key) {
+				let value = localStorage.getItem(key);
+				this.swssvicz(key, value);
+			},
+
+			swssvicz(key, value) {
 				if (Reflect_isNil(value)) {
 					value = null;
 				}
 				Vue.set(this.items, key, value);
 			},
 
-			setItem(key, value) {
+			hgegcsjt(key, value) {
 				if (Reflect_isNil(value)) {
+					value = null;
 					localStorage.removeItem(key);
 				} else {
 					localStorage.setItem(key, value);
 				}
-				this._setItem(key, value);
 			},
 		}
 	});
 
-	let optionKey = 'storage';
+	let _getStoredProperty = function(def, key) {
+		let storageKey = _getStorageKey.call(this, def, key);
+		let value =  _reactiveStorage.getItem(storageKey);
+		if (Reflect_isNil(value)) {
+			value = _getDefaultValue.call(this, def);
+		} else {
+			value = _parseValue.call(this, def, value);
+		}
+		return value;
+	};
+
+	let _setStoredProperty = function(def, key, value) {
+		let storageKey = _getStorageKey.call(this, def, key);
+		if (!Reflect_isNil(value)) {
+			value = _stringifyValue.call(this, def, value);
+		}
+		_reactiveStorage.setItem(storageKey, value);
+	};
+
 
 
 	let mixin = {
-		data() {
-			let data = {};
-			let storedData = this.$options.storedData;
-			if (storedData) {
-				let watch = {};
-				for (let [key, v] of Object.entries(storedData)) {
-					let type = prop.type;
-					let defaultValue = prop.default;
-					let value = localStorage.getItem(key);
-					if (value === null) {
-						value = defaultValue;
-					} else {
-						switch (type) {
-							case Number: {
-								value = parseFloat(value);
-								break;
-							}
-							case Boolean: {
-								value = !!parseInt(value);
-								break;
-							}
-						}
-					}
-					data[key] = value;
-					watch[key] = function(value) {
-						switch (type) {
-							case Number: {
-								value = ''+value;
-								break;
-							}
-							case Boolean: {
-								value = ''+(value ? 1 : 0);
-								break;
-							}
-						}
-						localStorage.setItem(key, value);
-					};
-					console.log(data, watch);
-				}
-				data._storageWatch = watch;
-			}
-			return data;
-		},
-
 		beforeCreate() {
-			let storedData = this.$options.storedData;
-			if (storedData) {
-				for (let [key, hander] of Object.entries(storedData)) {
-					this.$watch(key, hander, {deep: true});
+			let stored = this.$options.stored;
+			if (stored) {
+				for (let [key, def] of Object.entries(stored)) {
+					Object.assign(this.$options.computed, {
+						[key]: {
+							get(...args) {
+								return _getStoredProperty.call(this, def, key, ...args);
+							},
+
+							set(...args) {
+								return _setStoredProperty.call(this, def, key, ...args);
+							},
+						},
+					});
 				}
 			}
-			if (this._data._storageWatch) {
-				for (let [key, hander] of Object.entries(this._data._storageWatch)) {
-					this.$watch(key, hander, {deep: true});
-				}
-			}
 		},
 
-		destroyed() {
-
-		},
-
-		computed: {
-			storedValue: {
-				get() {
-					let value = globalValue;
-					if (value === undefined) {
-						value = parse(storage.load(key));
-					}
-				},
-				set(value) {
-					globalValue = value;
-					value = stringify(value);
-					storage.save(value);
-
-				},
-			},
-		},
+		computed: {},
 	};
 
 	let install = function(Vue) {

@@ -1,5 +1,7 @@
 # VueStorage
 
+The changes to the storage are reflected between apps and components, that use the same storage key. The changes are also reflected to the apps and components in other tabs.
+
 ## dependencies
 
 - [Vue](https://github.com/vuejs/vue)
@@ -31,15 +33,15 @@ Include the code in your page via a CDN.
 ```js
 
 {
-	storedData: {
-		aaa: String,
+	stored: {
+		title: String,
 		colorPalette: {
 			type: Array,
 			default: ['Red', 'Green', 'Blue'],
-		},		
-		bbb: {
+		},
+		visible: {
 			type: Boolean,
-			key: 'ccc',
+			key: 'MyComponent/visible',
 			default: false,
 		},
 	},
@@ -49,6 +51,8 @@ Include the code in your page via a CDN.
 
 ---
 
+Provide functions for the storage key and the default value to dynamically re-evaluate stored property when the storage key or the default value changes.
+
 ```js
 
 {
@@ -56,7 +60,7 @@ Include the code in your page via a CDN.
 		userId: Number,
 		userName: String,
 	},
-	storedData: {
+	stored: {
 		displayedUserName: {
 			key() {
 				return `app/users/${this.userId}/name`;
@@ -72,10 +76,12 @@ Include the code in your page via a CDN.
 
 ---
 
+Define custom `parse` and `stringify` functions to load and save data from the storage.
+
 ```js
 
 {
-	storedData: {
+	stored: {
 		fancyNumbers: {
 			type: {
 				parse(v) {
@@ -94,6 +100,8 @@ Include the code in your page via a CDN.
 
 ---
 
+The example below is a concept and is not implemented right now.
+
 ```js
 
 {
@@ -101,10 +109,10 @@ Include the code in your page via a CDN.
 		return {
 			level: 1,
 			health: 100,
-			ammo: 0,			
+			ammo: 0,
 		};
-	},	
-	storedData: {
+	},
+	stored: {
 		saveState: {
 			type: Object,
 			computed: {
@@ -112,17 +120,17 @@ Include the code in your page via a CDN.
 					return {
 						level: this.level,
 						health: this.health,
-						ammo: this.ammo,						
+						ammo: this.ammo,
 					};
 				},
 				set({level, health, ammo}) {
 					this.level = level;
 					this.health = health;
-					this.ammo = ammo;					
+					this.ammo = ammo;
 				},
 			},
 		},
-	},	
+	},
 	watch: {
 		saveState: {
 			handler() {},
