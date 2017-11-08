@@ -81,7 +81,7 @@
 	let _stringifyArray = _stringifyObject;
 
 	let _parseValue = function(def, value) {
-		switch (def) {
+		switch (def.type) {
 			case String:
 				return _parseString(value);
 			case Number:
@@ -93,14 +93,14 @@
 			case Array:
 				return _parseArray(value);
 		}
-		if (Object_isObject(def) && Function_isFunction(def.parse)) {
-			return def.parse.call(this, value);
+		if (Object_isObject(def.type) && Function_isFunction(def.type.parse)) {
+			return def.type.parse.call(this, value);
 		}
 		return _parseString(value);
 	};
 
 	let _stringifyValue = function(def, value) {
-		switch (def) {
+		switch (def.type) {
 			case String:
 				return _stringifyString(value);
 			case Number:
@@ -112,8 +112,8 @@
 			case Array:
 				return _stringifyArray(value);
 		}
-		if (Object_isObject(def) && Function_isFunction(def.stringify)) {
-			return def.stringify.call(this, value);
+		if (Object_isObject(def.type) && Function_isFunction(def.type.stringify)) {
+			return def.type.stringify.call(this, value);
 		}
 		return _stringifyString(value);
 	};
