@@ -33,18 +33,18 @@ Include the code in your page via a CDN.
 ```js
 
 {
-	stored: {
-		title: String,
-		colorPalette: {
-			type: Array,
-			default: ['Red', 'Green', 'Blue'],
-		},
-		visible: {
-			type: Boolean,
-			key: 'MyComponent/visible',
-			default: false,
-		},
-	},
+  stored: {
+    title: String,
+    colorPalette: {
+      type: JSON,
+      default: ['Red', 'Green', 'Blue'],
+    },
+    visible: {
+      type: JSON,
+      key: 'myComponentVisible',
+      default: true,
+    },
+  },
 }
 
 ```
@@ -56,20 +56,20 @@ Provide functions for the storage key and the default value to dynamically re-ev
 ```js
 
 {
-	props: {
-		userId: Number,
-		userName: String,
-	},
-	stored: {
-		displayedUserName: {
-			key() {
-				return `app/users/${this.userId}/name`;
-			},
-			default() {
-				return this.userName;
-			},
-		},
-	},
+  props: {
+    userId: Number,
+    userName: String,
+  },
+  stored: {
+    displayedUserName: {
+      key() {
+        return `app/users/${this.userId}/name`;
+      },
+      default() {
+        return this.userName;
+      },
+    },
+  },
 }
 
 ```
@@ -81,19 +81,19 @@ Define custom `parse` and `stringify` functions to load and save data from the s
 ```js
 
 {
-	stored: {
-		fancyNumbers: {
-			type: {
-				parse(v) {
-					return v.split('|').map(v => Number.parseInt(v));
-				},
-				stringify(v) {
-					return v.join('|');
-				},
-			},
-			default: [],
-		},
-	},
+  stored: {
+    fancyNumbers: {
+      type: {
+        parse(v) {
+          return v.split('|').map(v => Number.parseInt(v));
+        },
+        stringify(v) {
+          return v.join('|');
+        },
+      },
+      default: [],
+    },
+  },
 }
 
 ```
@@ -105,38 +105,38 @@ The example below is a concept and is not implemented right now.
 ```js
 
 {
-	data() {
-		return {
-			level: 1,
-			health: 100,
-			ammo: 0,
-		};
-	},
-	stored: {
-		saveState: {
-			type: Object,
-			computed: {
-				get() {
-					return {
-						level: this.level,
-						health: this.health,
-						ammo: this.ammo,
-					};
-				},
-				set({level, health, ammo}) {
-					this.level = level;
-					this.health = health;
-					this.ammo = ammo;
-				},
-			},
-		},
-	},
-	watch: {
-		saveState: {
-			handler() {},
-			immediate: true,
-		},
-	},
+  data() {
+    return {
+      level: 1,
+      health: 100,
+      ammo: 0,
+    };
+  },
+  stored: {
+    saveState: {
+      type: JSON,
+      computed: {
+        get() {
+          return {
+            level: this.level,
+            health: this.health,
+            ammo: this.ammo,
+          };
+        },
+        set({level, health, ammo}) {
+          this.level = level;
+          this.health = health;
+          this.ammo = ammo;
+        },
+      },
+    },
+  },
+  watch: {
+    saveState: {
+      handler() {},
+      immediate: true,
+    },
+  },
 }
 
 ```
