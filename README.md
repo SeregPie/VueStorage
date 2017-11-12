@@ -24,7 +24,14 @@ Include the code in your page via a CDN.
 
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/vuestorage"></script>
-<script>Vue.use(VueStorage)</script>
+
+```
+
+Include [polyfills](https://polyfill.io/) to support older browsers.
+
+```html
+
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
 ```
 
