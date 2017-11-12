@@ -2,7 +2,12 @@
 	"name": "vuestorage",
 	"version": "17.9.29",
 	"description": "vue storage",
-	"main": "VueStorage.min.js",
+	"main": "VueStorage.js",
+	"scripts": {
+		"build": "rollup -c",
+		"dev": "rollup -c -w | http-server -o",
+		"prepublishOnly": "npm run build"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/SeregPie/VueStorage.git"
@@ -26,6 +31,13 @@
 	},
 	"homepage": "https://github.com/SeregPie/VueStorage#readme",
 	"dependencies": {
-		"vue": "^2.4.4"
+		"vue": "^2.5.3"
+	},
+	"devDependencies": {
+		"eslint": "^4.11.0",
+		"http-server": "^0.10.0",
+		"rollup": "^0.50.1",
+		"rollup-plugin-buble": "^0.16.0",
+		"rollup-plugin-uglify": "^2.0.1"
 	}
 }

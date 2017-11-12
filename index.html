@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>VueStorage</title>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+		<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.js"></script>
+		<script src="VueStorage.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/0.16.9/vuetify.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/0.16.9/vuetify.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+	</head>
+	<body>
+		<v-app id="App">
+			<v-toolbar color="primary" dark fixed app>
+				<v-toolbar-title>VueStorage</v-toolbar-title>
+				<v-spacer></v-spacer>
+				<v-btn icon href="https://github.com/SeregPie/VueStorage" target="_blank">
+					<v-icon>fa-github</v-icon>
+				</v-btn>
+			</v-toolbar>
+			<main>
+				<v-content>
+					<v-container fluid fill-height>
+						<v-layout justify-center align-center>
+							<div style="width: 100%; max-width: 360px;">
+								<p>Open second tab and see what happens if you change the value.</p>
+								<v-text-field
+									label="storage key"
+									v-model="storageKey"
+									hint="change this to switch between stored values"
+									persistent-hint
+								></v-text-field>
+								<p>{{ storageValue }}</p>
+								<v-checkbox label="one" v-model="storageValue" value="one"></v-checkbox>
+								<v-checkbox label="two" v-model="storageValue" value="two"></v-checkbox>
+								<v-checkbox label="three" v-model="storageValue" value="three"></v-checkbox>
+							</div>
+						</v-layout>
+					</v-container>
+				</v-content>
+			</main>
+		</v-app>
+		<script src="demo/demo.js"></script>
+	</body>
+</html>
