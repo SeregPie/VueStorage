@@ -11,9 +11,14 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/0.17.0/vuetify.min.css"/>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/0.17.0/vuetify.min.js"></script>
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+		</style>
 	</head>
 	<body>
-		<v-app id="App">
+		<v-app id="App" v-cloak>
 			<v-toolbar color="cyan" dark fixed app>
 				<v-toolbar-title>VueStorage</v-toolbar-title>
 				<v-spacer></v-spacer>
