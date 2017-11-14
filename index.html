@@ -22,9 +22,9 @@
 				</v-btn>
 			</v-toolbar>
 			<v-content>
-				<v-container fluid fill-height>
-					<v-layout justify-center align-center>
-						<div style="width: 100%; max-width: 360px;">
+				<v-container fluid fill-height grid-list-xl>
+					<v-layout row wrap justify-center align-center>
+						<v-flex style="width: 100%; max-width: 360px;">
 							<div>Open a second tab in your browser and see what happens if you change the value.</div>
 							<div class="my-3"></div>
 							<v-text-field
@@ -39,8 +39,8 @@
 								<div class="caption grey--text text--darken-1">
 									stored value
 								</div>
-								<v-layout row wrap>
-									<v-flex>
+								<div style="display: flex; flex-wrap: wrap;">
+									<div style="flex: 1 1 auto;">
 										<v-checkbox
 											label="one"
 											v-model="value"
@@ -48,8 +48,8 @@
 											hide-details
 											color="cyan"
 										></v-checkbox>
-									</v-flex>
-									<v-flex>
+									</div>
+									<div style="flex: 1 1 auto;">
 										<v-checkbox
 											label="two"
 											v-model="value"
@@ -57,8 +57,8 @@
 											hide-details
 											color="cyan"
 										></v-checkbox>
-									</v-flex>
-									<v-flex>
+									</div>
+									<div style="flex: 1 1 auto;">
 										<v-checkbox
 											label="three"
 											v-model="value"
@@ -66,11 +66,16 @@
 											hide-details
 											color="cyan"
 										></v-checkbox>
-									</v-flex>
-								</v-layout>
-								<div><code>{{ JSON.stringify(value) }}</code></div>
+									</div>
+								</div>
+								<div><pre>{{ JSON.stringify(value) }}</pre></div>
 							</div>
-						</div>
+						</v-flex>
+						<v-flex style="width: 100%; max-width: 360px;">
+							<div class="pa-1 cyan lighten-4">
+								<pre>{&#10;  data: {&#10;    storageKey: 'test',&#10;  },&#10;  stored: {&#10;    value: {&#10;      type: JSON,&#10;      key() {&#10;        return this.storageKey;&#10;      },&#10;      default() {&#10;        return [];&#10;      },&#10;    },&#10;  },&#10;}</pre>
+							</div>
+						</v-flex>
 					</v-layout>
 				</v-container>
 			</v-content>
