@@ -1,7 +1,7 @@
 {
 	"name": "vuestorage",
 	"version": "17.9.29",
-	"description": "vue storage",
+	"description": "Allows components to save and load their data across browser sessions.",
 	"main": "VueStorage.js",
 	"scripts": {
 		"build": "rollup -c",
