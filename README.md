@@ -62,7 +62,7 @@ Include [polyfills](https://polyfill.io/) to support older browsers.
 
 ---
 
-Provide functions for the storage key and the default value to dynamically re-evaluate stored property.
+Provide functions for the storage key and the default value to dynamically re-evaluate stored data.
 
 ```js
 
