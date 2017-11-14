@@ -25,25 +25,25 @@
 				<v-container fluid fill-height>
 					<v-layout justify-center align-center>
 						<div style="width: 100%; max-width: 360px;">
-							<div>Open second tab and see what happens if you change the value.</div>
+							<div>Open a second tab in your browser and see what happens if you change the value.</div>
 							<div class="my-3"></div>
 							<v-text-field
 								label="storage key"
 								v-model="storageKey"
-								hint="change this to switch between stored values"
+								hint="Change this to switch between stored values."
 								persistent-hint
 								color="cyan"
 							></v-text-field>
 							<div class="my-3"></div>
 							<div>
 								<div class="caption grey--text text--darken-1">
-									storage value
+									stored value
 								</div>
 								<v-layout row wrap>
 									<v-flex>
 										<v-checkbox
 											label="one"
-											v-model="storageValue"
+											v-model="value"
 											value="one"
 											hide-details
 											color="cyan"
@@ -52,7 +52,7 @@
 									<v-flex>
 										<v-checkbox
 											label="two"
-											v-model="storageValue"
+											v-model="value"
 											value="two"
 											hide-details
 											color="cyan"
@@ -61,14 +61,14 @@
 									<v-flex>
 										<v-checkbox
 											label="three"
-											v-model="storageValue"
+											v-model="value"
 											value="three"
 											hide-details
 											color="cyan"
 										></v-checkbox>
 									</v-flex>
 								</v-layout>
-								<div><code>{{ JSON.stringify(storageValue) }}</code></div>
+								<div><code>{{ JSON.stringify(value) }}</code></div>
 							</div>
 						</div>
 					</v-layout>

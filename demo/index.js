@@ -8,7 +8,7 @@
 		},
 
 		stored: {
-			storageValue: {
+			value: {
 				type: JSON,
 				key: function() {
 					return this.storageKey;

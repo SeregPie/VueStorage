@@ -2,15 +2,17 @@ import Object_hasOwn from '../helpers/Object/hasOwn';
 import Reflect_isNil from '../helpers/Reflect/isNil';
 
 export default {
-	data: {
-		ownStorage: {},
+	data() {
+		return {
+			storage: {},
+		};
 	},
 
 	created() {
 		window.addEventListener('storage', this.storageEventListener);
 	},
 
-	destroyed() {
+	beforeDestroy() {
 		window.removeEventListener('storage', this.storageEventListener);
 	},
 
@@ -22,38 +24,38 @@ export default {
 
 	methods: {
 		onStorage(event) {
-			this.setItemToOwnStorage(event.key, event.newValue);
+			this.setItemToPrivateStorage(event.key, event.newValue);
 		},
 
 		getItem(key) {
-			if (!this.hasItemInOwnStorage(key)) {
-				this.setItemToOwnStorage(key, this.getItemFromLocalStorage(key));
+			if (!this.hasItemInPrivateStorage(key)) {
+				this.setItemToPrivateStorage(key, this.getItemFromLocalStorage(key));
 			}
-			return this.getItemFromOwnStorage(key);
+			return this.getItemFromPrivateStorage(key);
 		},
 
 		setItem(key, value) {
 			this.setItemToLocalStorage(key, value);
-			this.setItemToOwnStorage(key, value);
+			this.setItemToPrivateStorage(key, value);
 		},
 
-		hasItemInOwnStorage(key) {
-			return Object_hasOwn(this.ownStorage, key);
+		hasItemInPrivateStorage(key) {
+			return Object_hasOwn(this.storage, key);
 		},
 
-		getItemFromOwnStorage(key) {
-			return this.ownStorage[key];
+		getItemFromPrivateStorage(key) {
+			return this.storage[key];
 		},
 
 		getItemFromLocalStorage(key) {
 			return localStorage.getItem(key);
 		},
 
-		setItemToOwnStorage(key, value) {
+		setItemToPrivateStorage(key, value) {
 			if (Reflect_isNil(value)) {
 				value = null;
 			}
-			Vue.set(this.ownStorage, key, value);
+			Vue.set(this.storage, key, value);
 		},
 
 		setItemToLocalStorage(key, value) {

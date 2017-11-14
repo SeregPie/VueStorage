@@ -1,6 +1,6 @@
 {
 	"name": "vuestorage",
-	"version": "17.9.29",
+	"version": "17.11.14",
 	"description": "Allows components to save and load their data across browser sessions.",
 	"main": "VueStorage.js",
 	"scripts": {
