@@ -1,6 +1,6 @@
 # VueStorage
 
-The changes to the storage are reflected between apps and components, that use the same storage key. The changes are also reflected to the apps and components in other tabs.
+Allows components to save and load their data across browser sessions.
 
 ## dependencies
 
@@ -31,7 +31,7 @@ Include [polyfills](https://polyfill.io/) to support older browsers.
 
 ```html
 
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Object.entries"></script>
 
 ```
 
@@ -46,9 +46,9 @@ Include [polyfills](https://polyfill.io/) to support older browsers.
       type: JSON,
       default: ['Red', 'Green', 'Blue'],
     },
-    visible: {
+    enabled: {
       type: JSON,
-      key: 'myComponentVisible',
+      key: 'myApp/enabled',
       default: true,
     },
   },
@@ -58,7 +58,7 @@ Include [polyfills](https://polyfill.io/) to support older browsers.
 
 ---
 
-Provide functions for the storage key and the default value to dynamically re-evaluate stored property when the storage key or the default value changes.
+Provide functions for the storage key and the default value to dynamically re-evaluate stored property whenever their value changes.
 
 ```js
 
@@ -70,7 +70,7 @@ Provide functions for the storage key and the default value to dynamically re-ev
   stored: {
     displayedUserName: {
       key() {
-        return `app/users/${this.userId}/name`;
+        return `myApp/users/${this.userId}/name`;
       },
       default() {
         return this.userName;
@@ -83,7 +83,7 @@ Provide functions for the storage key and the default value to dynamically re-ev
 
 ---
 
-Define custom `parse` and `stringify` functions to load and save data from the storage.
+Define custom `parse` and `stringify` functions to manage how the data is stored.
 
 ```js
 
@@ -99,49 +99,6 @@ Define custom `parse` and `stringify` functions to load and save data from the s
         },
       },
       default: [],
-    },
-  },
-}
-
-```
-
----
-
-The example below is a concept and is not implemented right now.
-
-```js
-
-{
-  data() {
-    return {
-      level: 1,
-      health: 100,
-      ammo: 0,
-    };
-  },
-  stored: {
-    saveState: {
-      type: JSON,
-      computed: {
-        get() {
-          return {
-            level: this.level,
-            health: this.health,
-            ammo: this.ammo,
-          };
-        },
-        set({level, health, ammo}) {
-          this.level = level;
-          this.health = health;
-          this.ammo = ammo;
-        },
-      },
-    },
-  },
-  watch: {
-    saveState: {
-      handler() {},
-      immediate: true,
     },
   },
 }
