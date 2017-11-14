@@ -2,6 +2,10 @@
 
 Allows components to save and load their data across browser sessions.
 
+## demo
+
+[Try it out!](https://seregpie.github.io/VueStorage/)
+
 ## dependencies
 
 - [Vue](https://github.com/vuejs/vue)
@@ -58,7 +62,7 @@ Include [polyfills](https://polyfill.io/) to support older browsers.
 
 ---
 
-Provide functions for the storage key and the default value to dynamically re-evaluate stored property whenever their value changes.
+Provide functions for the storage key and the default value to dynamically re-evaluate stored property.
 
 ```js
 
