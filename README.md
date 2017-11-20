@@ -52,7 +52,7 @@ Include [polyfills](https://polyfill.io/) to support older browsers.
     },
     enabled: {
       type: JSON,
-      key: 'myApp/enabled',
+      key: 'myComponent.enabled',
       default: true,
     },
   },
