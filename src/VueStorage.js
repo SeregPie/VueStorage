@@ -1,7 +1,8 @@
 import Vue from 'vue';
 
-import Function_isFunction from './helpers/Function/isFunction';
 import Function_constant from './helpers/Function/constant';
+import Function_isFunction from './helpers/Function/isFunction';
+import Function_noop from './helpers/Function/noop';
 import Object_isObject from './helpers/Object/isObject';
 import Reflect_isNil from './helpers/Reflect/isNil';
 
@@ -14,36 +15,33 @@ let mixin = {
 		let stored = this.$options.stored;
 		if (stored) {
 			Object.entries(stored).forEach(([key, def]) => {
-
-				let getStorageKey;
-				if (Function_isFunction(def.key)) {
-					getStorageKey = def.key.bind(this);
-				} else
-				if (Reflect_isNil(def.key)) {
-					getStorageKey = Function_constant(key);
-				} else {
-					getStorageKey = Function_constant(String(def.key));
-				}
-
-				let getDefaultValue;
-				if (Function_isFunction(def.default)) {
-					getDefaultValue = def.default.bind(this);
-				} else {
-					getDefaultValue = Function_constant(def.default);
-				}
-
-				let parseValue;
-				let stringifyValue;
-				if (def.type === JSON) {
-					parseValue = JSON.parse.bind(JSON);
-					stringifyValue = JSON.stringify.bind(JSON);
-				} else
-				if (Object_isObject(def.type) && Function_isFunction(def.type.parse) && Function_isFunction(def.type.stringify)) {
-					parseValue = def.type.parse.bind(this);
-					stringifyValue = def.type.stringify.bind(this);
-				} else {
-					parseValue = String;
-					stringifyValue = String;
+				let getStorageKey = Function_constant(key);
+				let getDefaultValue = Function_noop;
+				let parseValue = String;
+				let stringifyValue = String;
+				if (Object_isObject(def)) {
+					if (Function_isFunction(def.key)) {
+						getStorageKey = def.key.bind(this);
+					} else {
+						getStorageKey = Function_constant(String(def.key));
+					}
+					if (Function_isFunction(def.default)) {
+						getDefaultValue = def.default.bind(this);
+					} else {
+						getDefaultValue = Function_constant(def.default);
+					}
+					if (def.type === JSON) {
+						parseValue = JSON.parse.bind(JSON);
+						stringifyValue = JSON.stringify.bind(JSON);
+					} else
+					if (Object_isObject(def.type)) {
+						if (Function_isFunction(def.type.parse)) {
+							parseValue = def.type.parse.bind(this);
+						}
+						if (Function_isFunction(def.type.stringify)) {
+							stringifyValue = def.type.stringify.bind(this);
+						}
+					}
 				}
 
 				this.$options.computed[key] = {
@@ -79,8 +77,8 @@ let install = function(Vue) {
 
 let VueStorage = {mixin, install};
 
+export default VueStorage;
+
 if (typeof window !== 'undefined') {
 	Vue.use(VueStorage);
 }
-
-export default VueStorage;

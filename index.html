@@ -5,21 +5,21 @@
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 		<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Object.entries"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
-		<script src="VueStorage.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/0.17.0/vuetify.min.css"/>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/0.17.0/vuetify.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.8/vue.min.js"></script>
 		<style>
 			[v-cloak] {
 				display: none;
 			}
 		</style>
+		<script src="VueStorage.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/0.17.2/vuetify.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/0.17.2/vuetify.min.js"></script>
 	</head>
 	<body>
 		<v-app id="App" v-cloak>
-			<v-toolbar color="cyan" dark fixed app>
+			<v-toolbar color="cyan darken-3" dark fixed app>
 				<v-toolbar-title>VueStorage</v-toolbar-title>
 				<v-spacer></v-spacer>
 				<v-btn icon href="https://github.com/SeregPie/VueStorage" target="_blank">
@@ -30,7 +30,7 @@
 				<v-container fluid fill-height grid-list-xl>
 					<v-layout row wrap justify-center align-center>
 						<v-flex style="width: 100%; max-width: 360px;">
-							<div>Open a second tab in your browser and see what happens if you change the value.</div>
+							<div>Change the value and reload the page. The updated value will remain. If you open a second tab in your browser, the changes to the value will be reflected between the tabs immediately.</div>
 							<div class="my-3"></div>
 							<v-text-field
 								label="storage key"
@@ -41,7 +41,7 @@
 							></v-text-field>
 							<div class="my-3"></div>
 							<div>
-								<div class="caption grey--text text--darken-1">
+								<div class="subheading grey--text text--darken-1">
 									stored value
 								</div>
 								<div style="display: flex; flex-wrap: wrap;">
