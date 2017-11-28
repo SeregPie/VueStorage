@@ -91,7 +91,7 @@ Vue.use(VueStorage, {
 
 ---
 
-Provide functions for the key to the storage and the default value to dynamically re-evaluate stored data.
+Provide functions for the key and the default value to dynamically re-evaluate stored data.
 
 ```js
 
