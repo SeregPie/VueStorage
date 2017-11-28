@@ -70,14 +70,18 @@ export default {
 		},
 
 		getStorageItem(key) {
-			return this.storage.getItem(key);
+			if (this.storage) {
+				return this.storage.getItem(key);
+			}
 		},
 
 		setStorageItem(key, value) {
-			if (Reflect_isNil(value)) {
-				this.storage.removeItem(key);
-			} else {
-				this.storage.setItem(key, value);
+			if (this.storage) {
+				if (Reflect_isNil(value)) {
+					this.storage.removeItem(key);
+				} else {
+					this.storage.setItem(key, value);
+				}
 			}
 		},
 	},

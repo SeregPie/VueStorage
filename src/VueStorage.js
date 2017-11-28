@@ -33,6 +33,13 @@ let VueStorage = {
 				let getDefaultValue = Function_noop;
 				let parseValue = String;
 				let stringifyValue = String;
+				if (def === String) {
+					// pass
+				} else
+				if (def === JSON) {
+					parseValue = JSON.parse.bind(JSON);
+					stringifyValue = JSON.stringify.bind(JSON);
+				} else
 				if (Object_isObject(def)) {
 					if (Function_isFunction(def.key)) {
 						getStorageKey = def.key.bind(this);
