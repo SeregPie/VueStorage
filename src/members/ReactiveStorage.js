@@ -2,9 +2,15 @@ import Object_hasOwn from '../helpers/Object/hasOwn';
 import Reflect_isNil from '../helpers/Reflect/isNil';
 
 export default {
+	props: {
+		storageType: {
+			default: 'local',
+		},
+	},
+
 	data() {
 		return {
-			storage: {},
+			items: {},
 		};
 	},
 
@@ -20,49 +26,58 @@ export default {
 		storageEventListener() {
 			return this.onStorage.bind(this);
 		},
+
+		storage() {
+			switch (this.storageType) {
+				case 'local':
+					return window.localStorage;
+				case 'session':
+					return window.sessionStorage;
+			}
+		},
 	},
 
 	methods: {
 		onStorage(event) {
-			this.setItemToPrivateStorage(event.key, event.newValue);
+			this.setOwnItem(event.key, event.newValue);
 		},
 
 		getItem(key) {
-			if (!this.hasItemInPrivateStorage(key)) {
-				this.setItemToPrivateStorage(key, this.getItemFromLocalStorage(key));
+			if (!this.hasOwnItem(key)) {
+				this.setOwnItem(key, this.getStorageItem(key));
 			}
-			return this.getItemFromPrivateStorage(key);
+			return this.getOwnItem(key);
 		},
 
 		setItem(key, value) {
-			this.setItemToLocalStorage(key, value);
-			this.setItemToPrivateStorage(key, value);
+			this.setStorageItem(key, value);
+			this.setOwnItem(key, value);
 		},
 
-		hasItemInPrivateStorage(key) {
-			return Object_hasOwn(this.storage, key);
+		hasOwnItem(key) {
+			return Object_hasOwn(this.items, key);
 		},
 
-		getItemFromPrivateStorage(key) {
-			return this.storage[key];
+		getOwnItem(key) {
+			return this.items[key];
 		},
 
-		getItemFromLocalStorage(key) {
-			return localStorage.getItem(key);
-		},
-
-		setItemToPrivateStorage(key, value) {
+		setOwnItem(key, value) {
 			if (Reflect_isNil(value)) {
 				value = null;
 			}
-			Vue.set(this.storage, key, value);
+			Vue.set(this.items, key, value);
 		},
 
-		setItemToLocalStorage(key, value) {
+		getStorageItem(key) {
+			return this.storage.getItem(key);
+		},
+
+		setStorageItem(key, value) {
 			if (Reflect_isNil(value)) {
-				localStorage.removeItem(key);
+				this.storage.removeItem(key);
 			} else {
-				localStorage.setItem(key, value);
+				this.storage.setItem(key, value);
 			}
 		},
 	},

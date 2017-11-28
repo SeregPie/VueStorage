@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 import Function_constant from './helpers/Function/constant';
 import Function_isFunction from './helpers/Function/isFunction';
 import Function_noop from './helpers/Function/noop';
@@ -8,12 +6,28 @@ import Reflect_isNil from './helpers/Reflect/isNil';
 
 import ReactiveStorage from './members/ReactiveStorage';
 
-let reactiveStorage = new Vue(ReactiveStorage);
+let reactiveStorage;
 
-let mixin = {
+let VueStorage = {
+	install(Vue, {
+		storageType = ReactiveStorage.props.storageType.default,
+	} = {}) {
+		if (!reactiveStorage) {
+			reactiveStorage = new (Vue.extend(ReactiveStorage))({propsData: {storageType}});
+		}
+		Vue.mixin(this);
+	},
+
 	beforeCreate() {
 		let stored = this.$options.stored;
 		if (stored) {
+			/*
+			???
+			if (!reactiveStorage) {
+				let Vue = this._Vue;
+				reactiveStorage = new Vue(ReactiveStorage);
+			}
+			*/
 			Object.entries(stored).forEach(([key, def]) => {
 				let getStorageKey = Function_constant(key);
 				let getDefaultValue = Function_noop;
@@ -43,7 +57,6 @@ let mixin = {
 						}
 					}
 				}
-
 				this.$options.computed[key] = {
 					get() {
 						let storageKey = getStorageKey();
@@ -71,14 +84,8 @@ let mixin = {
 	computed: {},
 };
 
-let install = function(Vue) {
-	Vue.mixin(mixin);
-};
-
-let VueStorage = {mixin, install};
-
 export default VueStorage;
 
-if (typeof window !== 'undefined') {
-	Vue.use(VueStorage);
+if (typeof window !== 'undefined' && window.Vue) {
+	window.Vue.use(VueStorage);
 }

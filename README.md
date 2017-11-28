@@ -12,7 +12,7 @@ Allows components to save and load their data across browser sessions.
 
 ## setup
 
-Install the [package](https://www.npmjs.com/package/vuestorage) via npm.
+### NPM
 
 ```sh
 
@@ -20,9 +20,20 @@ npm install vuestorage
 
 ```
 
----
+### ES2015
 
-Include the code in your page via a CDN.
+Install the plugin globally.
+
+```js
+
+import Vue from 'vue';
+import VueStorage from 'vuestorage';
+
+Vue.use(VueStorage);
+
+```
+
+### Browser
 
 ```html
 
@@ -30,6 +41,8 @@ Include the code in your page via a CDN.
 <script src="https://unpkg.com/vuestorage"></script>
 
 ```
+
+If Vue is detected, the plugin will be installed automatically.
 
 Include [polyfills](https://polyfill.io/) to support older browsers.
 
@@ -43,7 +56,7 @@ Include [polyfills](https://polyfill.io/) to support older browsers.
 
 ```js
 
-{
+new Vue({
   stored: {
     title: String,
     colorPalette: {
@@ -56,13 +69,29 @@ Include [polyfills](https://polyfill.io/) to support older browsers.
       default: true,
     },
   },
-}
+});
+
+```
+
+The option `type` manages how the data is stored. Two types are available: `String` and `JSON`. Default type is `String`.
+
+The option `key` is the key to the storage. If the option is not provided, the key of the attribute is used instead.
+
+---
+
+Override default options.
+
+```js
+
+Vue.use(VueStorage, {
+  storageType: 'local', // 'local' for localStorage and 'session' for sessionStorage
+});
 
 ```
 
 ---
 
-Provide functions for the storage key and the default value to dynamically re-evaluate stored data.
+Provide functions for the key to the storage and the default value to dynamically re-evaluate stored data.
 
 ```js
 
@@ -91,19 +120,17 @@ Define custom `parse` and `stringify` functions to manage how the data is stored
 
 ```js
 
-{
-  stored: {
-    fancyNumbers: {
-      type: {
-        parse(v) {
-          return v.split('|').map(v => Number.parseInt(v));
-        },
-        stringify(v) {
-          return v.join('|');
-        },
+stored: {
+  fancyNumbers: {
+    type: {
+      parse(v) {
+        return v.split('|').map(v => Number.parseInt(v));
       },
-      default: [],
+      stringify(v) {
+        return v.join('|');
+      },
     },
+    default: [],
   },
 }
 
