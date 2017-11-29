@@ -51,6 +51,9 @@ let VueStorage = {
 					} else {
 						getDefaultValue = Function_constant(def.default);
 					}
+					if (def.type === String) {
+						// pass
+					} else
 					if (def.type === JSON) {
 						parseValue = JSON.parse.bind(JSON);
 						stringifyValue = JSON.stringify.bind(JSON);
