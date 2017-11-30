@@ -66,7 +66,7 @@ export default {
 			if (Reflect_isNil(value)) {
 				value = null;
 			}
-			Vue.set(this.items, key, value);
+			this.$set(this.items, key, value);
 		},
 
 		getStorageItem(key) {
