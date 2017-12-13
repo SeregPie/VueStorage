@@ -8,7 +8,7 @@
 		},
 
 		stored: {
-			value: {
+			checkedNames: {
 				type: JSON,
 				key: function() {
 					return this.storageKey;

@@ -5,80 +5,85 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 		<title>VueStorage</title>
 		<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Array.prototype.includes,Object.entries"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.10/vue.min.js"></script>
 		<style>
 			[v-cloak] {
 				display: none;
 			}
 		</style>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.9/vue.js"></script>
 		<script src="VueStorage.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/0.17.3/vuetify.min.css"/>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/0.17.3/vuetify.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/1.0.0-alpha.2/vuetify.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/1.0.0-alpha.2/vuetify.min.js"></script>
 	</head>
 	<body>
-		<v-app id="App" v-cloak>
-			<v-toolbar color="cyan darken-3" dark fixed app>
+		<v-app
+			v-cloak
+			id="App"
+		>
+			<v-toolbar
+				dark
+				color="cyan darken-3"
+				app
+			>
 				<v-toolbar-title>VueStorage</v-toolbar-title>
 				<v-spacer></v-spacer>
-				<v-btn icon href="https://github.com/SeregPie/VueStorage" target="_blank">
+				<v-btn
+					icon
+					href="https://github.com/SeregPie/VueStorage"
+					target="_blank"
+				>
 					<v-icon>fa-github</v-icon>
 				</v-btn>
 			</v-toolbar>
 			<v-content>
-				<v-container fluid fill-height grid-list-xl>
-					<v-layout row wrap justify-center align-center>
+				<v-container
+					fluid
+					fill-height
+					grid-list-xl
+				>
+					<v-layout
+						row
+						wrap
+						justify-center
+						align-center
+					>
 						<v-flex style="width: 100%; max-width: 360px;">
-							<div>Change the value and reload the page. The updated value will remain. If you open a second tab in your browser, the changes to the value will be reflected between the tabs immediately.</div>
+							<div>Check some boxes and reload the page. The boxes will remain checked. If you open a second tab in your browser, the changes to the checkboxes will be reflected between the tabs immediately.</div>
+							<div class="my-3"></div>
+							<div>
+								<div class="subheading grey--text text--darken-1">
+									checked names
+								</div>
+								<div style="display: flex; flex-wrap: wrap;">
+									<div
+										v-for="name in ['Jack', 'John', 'Mike']"
+										style="flex: 1 1 auto;"
+									>
+										<v-checkbox
+											:label="name"
+											v-model="checkedNames"
+											:value="name"
+											color="cyan"
+											hide-details
+										></v-checkbox>
+									</div>
+								</div>
+								<div><pre>{{ JSON.stringify(checkedNames) }}</pre></div>
+							</div>
 							<div class="my-3"></div>
 							<v-text-field
 								label="storage key"
 								v-model="storageKey"
-								hint="Change this to switch between stored values."
+								hint="Change this to switch between stored items."
 								persistent-hint
 								color="cyan"
 							></v-text-field>
-							<div class="my-3"></div>
-							<div>
-								<div class="subheading grey--text text--darken-1">
-									stored value
-								</div>
-								<div style="display: flex; flex-wrap: wrap;">
-									<div style="flex: 1 1 auto;">
-										<v-checkbox
-											label="one"
-											v-model="value"
-											value="one"
-											hide-details
-											color="cyan"
-										></v-checkbox>
-									</div>
-									<div style="flex: 1 1 auto;">
-										<v-checkbox
-											label="two"
-											v-model="value"
-											value="two"
-											hide-details
-											color="cyan"
-										></v-checkbox>
-									</div>
-									<div style="flex: 1 1 auto;">
-										<v-checkbox
-											label="three"
-											v-model="value"
-											value="three"
-											hide-details
-											color="cyan"
-										></v-checkbox>
-									</div>
-								</div>
-								<div><pre>{{ JSON.stringify(value) }}</pre></div>
-							</div>
 						</v-flex>
 						<v-flex style="width: 100%; max-width: 360px;">
 							<div class="pa-1 cyan lighten-4">
-								<pre>{&#10;  data: {&#10;    storageKey: 'test',&#10;  },&#10;  stored: {&#10;    value: {&#10;      type: JSON,&#10;      key() {&#10;        return this.storageKey;&#10;      },&#10;      default() {&#10;        return [];&#10;      },&#10;    },&#10;  },&#10;}</pre>
+								<pre>{&#10;  data: {&#10;    storageKey: 'test',&#10;  },&#10;  stored: {&#10;    checkedNames: {&#10;      type: JSON,&#10;      key() {&#10;        return this.storageKey;&#10;      },&#10;      default() {&#10;        return [];&#10;      },&#10;    },&#10;  },&#10;}</pre>
 							</div>
 						</v-flex>
 					</v-layout>

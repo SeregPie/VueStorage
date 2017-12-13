@@ -18,6 +18,8 @@ let VueStorage = {
 		Vue.mixin(this);
 	},
 
+	computed: {},
+
 	beforeCreate() {
 		let stored = this.$options.stored;
 		if (stored) {
@@ -90,8 +92,6 @@ let VueStorage = {
 			});
 		}
 	},
-
-	computed: {},
 };
 
 export default VueStorage;

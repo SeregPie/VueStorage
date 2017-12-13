@@ -14,14 +14,6 @@ export default {
 		};
 	},
 
-	created() {
-		window.addEventListener('storage', this.storageEventListener);
-	},
-
-	beforeDestroy() {
-		window.removeEventListener('storage', this.storageEventListener);
-	},
-
 	computed: {
 		storageEventListener() {
 			return this.onStorage.bind(this);
@@ -35,6 +27,14 @@ export default {
 					return window.sessionStorage;
 			}
 		},
+	},
+
+	created() {
+		window.addEventListener('storage', this.storageEventListener);
+	},
+
+	beforeDestroy() {
+		window.removeEventListener('storage', this.storageEventListener);
 	},
 
 	methods: {
