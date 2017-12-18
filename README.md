@@ -12,7 +12,7 @@ Allows components to save and load their data across browser sessions.
 
 ## setup
 
-### NPM
+### npm
 
 ```sh
 
@@ -20,7 +20,7 @@ npm install vuestorage
 
 ```
 
-### ES2015
+### ES module
 
 Install the plugin globally.
 
@@ -33,7 +33,7 @@ Vue.use(VueStorage);
 
 ```
 
-### Browser
+### browser
 
 ```html
 
