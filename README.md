@@ -14,48 +14,41 @@ Allows components to save and load their data across browser sessions.
 
 ### npm
 
-```sh
-
+```shell
 npm install vuestorage
-
 ```
 
 ### ES module
 
 Install the plugin globally.
 
-```js
-
+```javascript
 import Vue from 'vue';
 import VueStorage from 'vuestorage';
 
 Vue.use(VueStorage);
-
 ```
 
 ### browser
 
 ```html
-
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/vuestorage"></script>
-
 ```
 
 If Vue is detected, the plugin will be installed automatically.
 
+---
+
 Include [polyfills](https://polyfill.io/) to support older browsers.
 
 ```html
-
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Object.entries"></script>
-
 ```
 
 ## usage
 
-```js
-
+```javascript
 new Vue({
   stored: {
     title: String,
@@ -70,7 +63,6 @@ new Vue({
     },
   },
 });
-
 ```
 
 The option `type` manages how the data is stored. Two types are available: `String` and `JSON`. Default type is `String`.
@@ -81,20 +73,17 @@ The option `key` is the key to the storage. If the option is not provided, the k
 
 Override default options.
 
-```js
-
+```javascript
 Vue.use(VueStorage, {
   storageType: 'local', // 'local' for localStorage and 'session' for sessionStorage
 });
-
 ```
 
 ---
 
 Provide functions for the key and the default value to dynamically re-evaluate stored data.
 
-```js
-
+```javascript
 {
   props: {
     userId: Number,
@@ -111,15 +100,13 @@ Provide functions for the key and the default value to dynamically re-evaluate s
     },
   },
 }
-
 ```
 
 ---
 
 Define custom `parse` and `stringify` functions to manage how the data is stored.
 
-```js
-
+```javascript
 stored: {
   fancyNumbers: {
     type: {
@@ -133,5 +120,4 @@ stored: {
     default: [],
   },
 }
-
 ```
