@@ -53,49 +53,54 @@
 				<v-container
 					fluid
 					fill-height
-					grid-list-xl
 				>
 					<v-layout
-						row
-						wrap
 						justify-center
 						align-center
 					>
-						<v-flex style="width: 100%; max-width: 360px;">
-							<div>Check some boxes and reload the page. The boxes will remain checked. If you open a second tab in your browser, the changes to the checkboxes will be reflected between the tabs immediately.</div>
-							<div class="my-3"></div>
-							<div>
-								<div class="subheading grey--text text--darken-1">
-									checked names
-								</div>
-								<div style="display: flex; flex-wrap: wrap;">
-									<div
-										v-for="name in ['Jack', 'John', 'Mike']"
-										style="flex: 1 1 auto;"
-									>
-										<v-checkbox
-											:label="name"
-											v-model="checkedNames"
-											:value="name"
-											color="cyan"
-											hide-details
-										></v-checkbox>
+						<v-flex>
+							<div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; margin: -16px;">
+								<div style="padding: 16px;">
+									<div style="width: 100%; max-width: 350px; display: flex; flex-direction: column; margin: -8px;">
+										<div style="padding: 8px;">
+											Check some boxes and reload the page. The boxes will remain checked. If you open a second tab in your browser, the changes to the checkboxes will be reflected between the tabs immediately.
+										</div>
+										<div style="padding: 8px;">
+											<div class="subheading grey--text text--darken-1">
+												checked names
+											</div>
+											<div style="display: flex; flex-wrap: wrap;">
+												<div
+													v-for="name in ['Jack', 'John', 'Mike']"
+													style="flex: 1;"
+												>
+													<v-checkbox
+														:label="name"
+														v-model="checkedNames"
+														:value="name"
+														color="cyan"
+														hide-details
+													></v-checkbox>
+												</div>
+											</div>
+											<div><pre>{{ JSON.stringify(checkedNames) }}</pre></div>
+										</div>
+										<div style="padding: 8px;">
+											<v-text-field
+												label="storage key"
+												v-model="storageKey"
+												hint="Change this to switch between stored items."
+												persistent-hint
+												color="cyan"
+											></v-text-field>
+										</div>
 									</div>
 								</div>
-								<div><pre>{{ JSON.stringify(checkedNames) }}</pre></div>
-							</div>
-							<div class="my-3"></div>
-							<v-text-field
-								label="storage key"
-								v-model="storageKey"
-								hint="Change this to switch between stored items."
-								persistent-hint
-								color="cyan"
-							></v-text-field>
-						</v-flex>
-						<v-flex style="width: 100%; max-width: 360px;">
-							<div class="pa-1 cyan lighten-4">
-								<pre>{&#10;  data: {&#10;    storageKey: 'test',&#10;  },&#10;  stored: {&#10;    checkedNames: {&#10;      type: JSON,&#10;      key() {&#10;        return this.storageKey;&#10;      },&#10;      default() {&#10;        return [];&#10;      },&#10;    },&#10;  },&#10;}</pre>
+								<div style="padding: 16px; width: 100%; max-width: 350px;">
+									<div class="pa-1 cyan lighten-4">
+										<pre>{&#10;  data: {&#10;    storageKey: 'test',&#10;  },&#10;  stored: {&#10;    checkedNames: {&#10;      type: JSON,&#10;      key() {&#10;        return this.storageKey;&#10;      },&#10;      default() {&#10;        return [];&#10;      },&#10;    },&#10;  },&#10;}</pre>
+									</div>
+								</div>
 							</div>
 						</v-flex>
 					</v-layout>
