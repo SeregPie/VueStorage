@@ -27,13 +27,10 @@ let VueStorage = {
 	beforeCreate() {
 		let stored = this.$options.stored;
 		if (stored) {
-			/*
-			???
 			if (!reactiveStorage) {
-				let Vue = this._Vue;
+				let Vue = this.$root.constructor;
 				reactiveStorage = new Vue(ReactiveStorage);
 			}
-			*/
 			Object.entries(stored).forEach(([key, def]) => {
 				let getStorageKey = Function_constant(key);
 				let getDefaultValue = Function_noop;
