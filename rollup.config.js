@@ -14,6 +14,12 @@ export default {
 	plugins: [
 		nodeResolve(),
 		buble(),
-		uglify(),
+		uglify({
+			mangle: {
+				properties: {
+					regex: /^ǂ/,
+				},
+			},
+		}),
 	],
 };

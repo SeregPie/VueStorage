@@ -3,24 +3,24 @@ import Lang_isNil from 'x/src/Lang/isNil';
 
 export default {
 	props: {
-		storageType: {
+		ǂstorageType: {
 			default: 'local',
 		},
 	},
 
 	data() {
 		return {
-			items: {},
+			ǂitems: {},
 		};
 	},
 
 	computed: {
-		storageEventListener() {
-			return this.onStorage.bind(this);
+		ǂstorageEventListener() {
+			return this.ǂonStorage.bind(this);
 		},
 
-		storage() {
-			switch (this.storageType) {
+		ǂstorage() {
+			switch (this.ǂstorageType) {
 				case 'local':
 					return window.localStorage;
 				case 'session':
@@ -30,57 +30,57 @@ export default {
 	},
 
 	created() {
-		window.addEventListener('storage', this.storageEventListener);
+		window.addEventListener('storage', this.ǂstorageEventListener);
 	},
 
 	beforeDestroy() {
-		window.removeEventListener('storage', this.storageEventListener);
+		window.removeEventListener('storage', this.ǂstorageEventListener);
 	},
 
 	methods: {
-		onStorage(event) {
-			this.setOwnItem(event.key, event.newValue);
+		ǂonStorage(event) {
+			this.ǂsetOwnItem(event.key, event.newValue);
 		},
 
-		getItem(key) {
-			if (!this.hasOwnItem(key)) {
-				this.setOwnItem(key, this.getStorageItem(key));
+		ǂgetItem(key) {
+			if (!this.ǂhasOwnItem(key)) {
+				this.ǂsetOwnItem(key, this.ǂgetStorageItem(key));
 			}
-			return this.getOwnItem(key);
+			return this.ǂgetOwnItem(key);
 		},
 
-		setItem(key, value) {
-			this.setStorageItem(key, value);
-			this.setOwnItem(key, value);
+		ǂsetItem(key, value) {
+			this.ǂsetStorageItem(key, value);
+			this.ǂsetOwnItem(key, value);
 		},
 
-		hasOwnItem(key) {
-			return Object_hasOwn(this.items, key);
+		ǂhasOwnItem(key) {
+			return Object_hasOwn(this.ǂitems, key);
 		},
 
-		getOwnItem(key) {
-			return this.items[key];
+		ǂgetOwnItem(key) {
+			return this.ǂitems[key];
 		},
 
-		setOwnItem(key, value) {
+		ǂsetOwnItem(key, value) {
 			if (Lang_isNil(value)) {
 				value = null;
 			}
-			this.$set(this.items, key, value);
+			this.$set(this.ǂitems, key, value);
 		},
 
-		getStorageItem(key) {
-			if (this.storage) {
-				return this.storage.getItem(key);
+		ǂgetStorageItem(key) {
+			if (this.ǂstorage) {
+				return this.ǂstorage.getItem(key);
 			}
 		},
 
-		setStorageItem(key, value) {
-			if (this.storage) {
+		ǂsetStorageItem(key, value) {
+			if (this.ǂstorage) {
 				if (Lang_isNil(value)) {
-					this.storage.removeItem(key);
+					this.ǂstorage.removeItem(key);
 				} else {
-					this.storage.setItem(key, value);
+					this.ǂstorage.setItem(key, value);
 				}
 			}
 		},

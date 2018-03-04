@@ -10,10 +10,14 @@ let reactiveStorage;
 
 let VueStorage = {
 	install(Vue, {
-		storageType = ReactiveStorage.props.storageType.default,
+		storageType = ReactiveStorage.props.ǂstorageType.default,
 	} = {}) {
 		if (!reactiveStorage) {
-			reactiveStorage = new (Vue.extend(ReactiveStorage))({propsData: {storageType}});
+			reactiveStorage = new (Vue.extend(ReactiveStorage))({
+				propsData: {
+					ǂstorageType: storageType,
+				},
+			});
 		}
 		Vue.mixin(this);
 	},
@@ -72,7 +76,7 @@ let VueStorage = {
 				this.$options.computed[key] = {
 					get() {
 						let storageKey = getStorageKey();
-						let value =  reactiveStorage.getItem(storageKey);
+						let value =  reactiveStorage.ǂgetItem(storageKey);
 						if (Lang_isNil(value)) {
 							value = getDefaultValue();
 						} else {
@@ -86,7 +90,7 @@ let VueStorage = {
 						if (!Lang_isNil(value)) {
 							value = stringifyValue(value);
 						}
-						reactiveStorage.setItem(storageKey, value);
+						reactiveStorage.ǂsetItem(storageKey, value);
 					},
 				};
 			});
