@@ -50,7 +50,7 @@ new Vue({
     },
     enabled: {
       type: JSON,
-      key: 'myComponent.enabled',
+      key: 'myApp.enabled',
       default: true,
     },
   },

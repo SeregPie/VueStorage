@@ -1,5 +1,5 @@
-import Object_hasOwn from '../helpers/Object/hasOwn';
-import Reflect_isNil from '../helpers/Reflect/isNil';
+import Object_hasOwn from 'x/src/Object/hasOwn';
+import Lang_isNil from 'x/src/Lang/isNil';
 
 export default {
 	props: {
@@ -63,7 +63,7 @@ export default {
 		},
 
 		setOwnItem(key, value) {
-			if (Reflect_isNil(value)) {
+			if (Lang_isNil(value)) {
 				value = null;
 			}
 			this.$set(this.items, key, value);
@@ -77,7 +77,7 @@ export default {
 
 		setStorageItem(key, value) {
 			if (this.storage) {
-				if (Reflect_isNil(value)) {
+				if (Lang_isNil(value)) {
 					this.storage.removeItem(key);
 				} else {
 					this.storage.setItem(key, value);

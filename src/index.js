@@ -1,10 +1,10 @@
-import Function_constant from './helpers/Function/constant';
-import Function_isFunction from './helpers/Function/isFunction';
-import Function_noop from './helpers/Function/noop';
-import Object_isObject from './helpers/Object/isObject';
-import Reflect_isNil from './helpers/Reflect/isNil';
+import Function_constant from 'x/src/Function/constant';
+import Function_isFunction from 'x/src/Function/isFunction';
+import Function_noop from 'x/src/Function/noop';
+import Object_isObject from 'x/src/Object/isObject';
+import Lang_isNil from 'x/src/Lang/isNil';
 
-import ReactiveStorage from './members/ReactiveStorage';
+import ReactiveStorage from './ReactiveStorage';
 
 let reactiveStorage;
 
@@ -73,7 +73,7 @@ let VueStorage = {
 					get() {
 						let storageKey = getStorageKey();
 						let value =  reactiveStorage.getItem(storageKey);
-						if (Reflect_isNil(value)) {
+						if (Lang_isNil(value)) {
 							value = getDefaultValue();
 						} else {
 							value = parseValue(value);
@@ -83,7 +83,7 @@ let VueStorage = {
 
 					set(value) {
 						let storageKey = getStorageKey();
-						if (!Reflect_isNil(value)) {
+						if (!Lang_isNil(value)) {
 							value = stringifyValue(value);
 						}
 						reactiveStorage.setItem(storageKey, value);

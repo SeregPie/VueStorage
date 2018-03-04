@@ -1,14 +1,18 @@
 import buble from 'rollup-plugin-buble';
+import nodeResolve from 'rollup-plugin-node-resolve';
 import uglify from 'rollup-plugin-uglify';
 
+import pkg from './package.json';
+
 export default {
-	input: 'src/VueStorage.js',
+	input: 'src/index.js',
 	output: {
-		file: 'VueStorage.js',
+		file: pkg.main,
 		format: 'umd',
 		name: 'VueStorage',
 	},
 	plugins: [
+		nodeResolve(),
 		buble(),
 		uglify(),
 	],
