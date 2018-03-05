@@ -29,17 +29,6 @@ import VueStorage from 'vuestorage';
 Vue.use(VueStorage);
 ```
 
-Register the plugin in the scope of another instance.
-
-```javascript
-import VueStorage from 'vuestorage';
-
-export default {
-  // ...
-  mixins: [VueStorage],
-};
-```
-
 ### browser
 
 ```html
