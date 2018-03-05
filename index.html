@@ -28,6 +28,7 @@
 			href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/1.0.4/vuetify.min.css"
 		/>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/1.0.4/vuetify.min.js"></script>
+		<script src="https://unpkg.com/@seregpie/vueflex"></script>
 	</head>
 	<body>
 		<v-app
@@ -50,35 +51,32 @@
 				</v-btn>
 			</v-toolbar>
 			<v-content>
-				<v-container
-					fluid
-					fill-height
-					hide-overflow
-				>
-					<div
+				<v-container fill-height>
+					<vue-flex-box
 						style="
-							width: calc(100% + 32px);
-							height: calc(100% + 32px);
-							display: flex;
-							flex-wrap: wrap;
-							justify-content: center;
-							align-items: center;
-							align-content: center;
-							margin: -16px;
+							width: 100%;
+							height: 100%;
 						"
+						wrap
+						justify-content="center"
+						align-items="center"
+						align-content="center"
+						:spacing="32"
 					>
-						<div
+						<vue-flex-item
 							style="
-								padding: 16px;
 								width: 100%;
 								max-width: 350px;
 							"
 						>
-							<div style="margin: -8px;">
-								<div style="padding: 8px;">
+							<vue-flex-box
+								direction-column
+								:spacing="16"
+							>
+								<vue-flex-item>
 									Check some boxes and reload the page. The boxes will remain checked. If you open a second tab in your browser, the changes to the checkboxes will be reflected between the tabs immediately.
-								</div>
-								<div style="padding: 8px;">
+								</vue-flex-item>
+								<vue-flex-item>
 									<div class="subheading grey--text text--darken-1">
 										checked names
 									</div>
@@ -102,8 +100,8 @@
 										</div>
 									</div>
 									<div><pre>{{ JSON.stringify(checkedNames) }}</pre></div>
-								</div>
-								<div style="padding: 8px;">
+								</vue-flex-item>
+								<vue-flex-item>
 									<v-text-field
 										label="storage key"
 										v-model="storageKey"
@@ -111,12 +109,11 @@
 										persistent-hint
 										color="cyan"
 									></v-text-field>
-								</div>
-							</div>
-						</div>
-						<div
+								</vue-flex-item>
+							</vue-flex-box>
+						</vue-flex-item>
+						<vue-flex-item
 							style="
-								padding: 16px;
 								width: 100%;
 								max-width: 350px;
 							"
@@ -127,8 +124,8 @@
 							>
 								<pre>{&#10;  data: {&#10;    storageKey: 'test',&#10;  },&#10;  stored: {&#10;    checkedNames: {&#10;      type: JSON,&#10;      key() {&#10;        return this.storageKey;&#10;      },&#10;      default() {&#10;        return [];&#10;      },&#10;    },&#10;  },&#10;}</pre>
 							</div>
-						</div>
-					</div>
+						</vue-flex-item>
+					</vue-flex-box>
 				</v-container>
 			</v-content>
 		</v-app>
