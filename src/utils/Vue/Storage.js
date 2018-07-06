@@ -1,5 +1,5 @@
-import Object_hasOwn from 'x/src/Object/hasOwn';
-import Lang_isNil from 'x/src/Lang/isNil';
+import Lang_isNil from '../Lang/isNil';
+import Object_hasOwn from '../Object/hasOwn';
 
 export default {
 	props: {

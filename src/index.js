@@ -1,7 +1,7 @@
-import VueStorage from './VueStorage';
+import VueStored from './VueStored';
 
-export default VueStorage;
+export default VueStored;
 
 if (typeof window !== 'undefined' && window.Vue) {
-	window.Vue.use(VueStorage);
+	window.Vue.use(VueStored);
 }

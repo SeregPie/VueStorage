@@ -1,21 +1,22 @@
-import Function_constant from 'x/src/Function/constant';
-import Function_isFunction from 'x/src/Function/isFunction';
-import Function_noop from 'x/src/Function/noop';
-import Object_isObject from 'x/src/Object/isObject';
-import Lang_isNil from 'x/src/Lang/isNil';
-
-import Storage from './Storage';
+import Function_constant from '/utils/Function/constant';
+import Function_isFunction from '/utils/Function/isFunction';
+import Function_noop from '/utils/Function/noop';
+import Lang_isNil from '/utils/Lang/isNil';
+import Object_isObject from '/utils/Object/isObject';
+import VueStorage from '/utils/Vue/Storage';
 
 let storage;
 
 export default {
 	install(Vue, {
-		storageType = Storage.props.ǂstorageType.default,
+		storageType = VueStorage.props.ǂstorageType.default,
 	} = {}) {
-		Vue.config.optionMergeStrategies.stored = function(toVal, fromVal) {
-			return {...fromVal, ...toVal};
-		};
-		storage = new (Vue.extend(Storage))({
+		Object.assign(Vue.config.optionMergeStrategies, {
+			stored(toVal, fromVal) {
+				return {...fromVal, ...toVal};
+			},
+		});
+		storage = new (Vue.extend(VueStorage))({
 			propsData: {
 				ǂstorageType: storageType,
 			},
@@ -26,7 +27,11 @@ export default {
 	computed: {},
 
 	beforeCreate() {
-		let stored = this.$options.stored;
+		let {$options} = this;
+		let {
+			computed,
+			stored,
+		} = $options;
 		if (stored) {
 			Object.entries(stored).forEach(([key, def]) => {
 				let getStorageKey = Function_constant(key);
@@ -67,7 +72,7 @@ export default {
 						}
 					}
 				}
-				this.$options.computed[key] = {
+				computed[key] = {
 					get() {
 						let storageKey = getStorageKey();
 						let value =  storage.ǂgetItem(storageKey);
@@ -78,7 +83,6 @@ export default {
 						}
 						return value;
 					},
-
 					set(value) {
 						let storageKey = getStorageKey();
 						if (!Lang_isNil(value)) {

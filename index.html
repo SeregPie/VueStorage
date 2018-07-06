@@ -2,10 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 		<title>VueStorage</title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
@@ -15,117 +12,36 @@
 			}
 		</style>
 		<script src="VueStorage.js"></script>
-		<link
-			rel="stylesheet"
-			href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/1.0.8/vuetify.min.css"
-		/>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/1.0.8/vuetify.min.js"></script>
-		<script src="https://unpkg.com/@seregpie/vueflex"></script>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/1.1.1/vuetify.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/1.1.1/vuetify.min.js"></script>
+		<script src="https://unpkg.com/@seregpie/vueflex@18.7.4"></script>
 	</head>
 	<body>
-		<v-app
-			v-cloak
-			id="App"
-		>
-			<v-toolbar
-				dark
-				color="cyan darken-3"
-				app
-			>
+		<v-app v-cloak id="app">
+			<v-toolbar dark dense app>
 				<v-toolbar-title>VueStorage</v-toolbar-title>
 				<v-spacer></v-spacer>
-				<v-btn
-					icon
-					href="https://github.com/SeregPie/VueStorage"
-					target="_blank"
-				>
+				<v-btn href="https://github.com/SeregPie/VueStorage" target="_blank" icon>
 					<v-icon>fab fa-github</v-icon>
 				</v-btn>
 			</v-toolbar>
 			<v-content>
-				<v-container fill-height>
-					<vue-flex-box
-						style="
-							width: 100%;
-							height: 100%;
-						"
-						wrap
-						justify-content="center"
-						align-items="center"
-						align-content="center"
-						:spacing="32"
-					>
-						<vue-flex-item
-							style="
-								width: 100%;
-								max-width: 350px;
-							"
-						>
-							<vue-flex-box
-								direction-column
-								:spacing="16"
-							>
-								<vue-flex-item>
-									Check some boxes and reload the page. The boxes will remain checked. If you open a second tab in your browser, the changes to the checkboxes will be reflected between the tabs immediately.
-								</vue-flex-item>
-								<vue-flex-item>
-									<div class="input-group pa-0">
-										<label>
-											checked names
-										</label>
-									</div>
-									<div
-										style="
-											display: flex;
-											flex-wrap: wrap;
-										"
-									>
-										<div
-											v-for="name in ['Jack', 'John', 'Mike']"
-											style="flex: 1;"
-										>
-											<v-checkbox
-												:label="name"
-												v-model="checkedNames"
-												:value="name"
-												color="cyan"
-												hide-details
-											></v-checkbox>
-										</div>
-									</div>
-									<div><pre>{{ JSON.stringify(checkedNames) }}</pre></div>
-								</vue-flex-item>
-								<vue-flex-item>
-									<v-text-field
-										label="storage key"
-										v-model="storageKey"
-										hint="Change this to switch between stored items."
-										persistent-hint
-										color="cyan"
-									></v-text-field>
-								</vue-flex-item>
-							</vue-flex-box>
-						</vue-flex-item>
-						<vue-flex-item
-							style="
-								width: 100%;
-								max-width: 350px;
-							"
-						>
-							<div
-								class="cyan lighten-4"
-								style="padding: 8px;"
-							>
-								<pre>{&#10;  data: {&#10;    storageKey: 'test',&#10;  },&#10;  stored: {&#10;    checkedNames: {&#10;      type: JSON,&#10;      key() {&#10;        return this.storageKey;&#10;      },&#10;      default() {&#10;        return [];&#10;      },&#10;    },&#10;  },&#10;}</pre>
+				<v-container fill-height justify-center>
+					<vue-flex-box style="width: 100%; max-width: 350px;" direction-column spacing="16px">
+						<vue-flex-item>Check some boxes and reload the page. The boxes will remain checked. If you open a second tab in your browser, the changes to the checkboxes will be reflected between the tabs immediately.</vue-flex-item>
+						<vue-flex-item>
+							<div>checked names</div>
+							<div style="display: flex; flex-wrap: wrap;">
+								<div v-for="name in ['Jack', 'John', 'Mike']" style="flex: 1 1 0%;">
+									<v-checkbox class="ma-0" :label="name" v-model="checkedNames" :value="name" hide-details></v-checkbox>
+								</div>
 							</div>
+							<div><pre>{{ JSON.stringify(checkedNames) }}</pre></div>
+						</vue-flex-item>
+						<vue-flex-item>
+							<v-text-field label="storage key" v-model="storageKey" hint="Change this to switch between stored items." persistent-hint></v-text-field>
 						</vue-flex-item>
 					</vue-flex-box>
 				</v-container>
