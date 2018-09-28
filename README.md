@@ -1,6 +1,6 @@
 # VueStorage
 
-Allows components to save and load their data across browser sessions.
+Allows the components to save and load their data across the browser sessions.
 
 ## demo
 
