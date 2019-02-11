@@ -48,6 +48,7 @@ new Vue({
       type: JSON,
       key: 'myApp/enabled',
       default: true,
+      session: true,
     },
   },
 });
@@ -57,15 +58,7 @@ The option `type` manages how the data is stored. Two types are available: `Stri
 
 The option `key` is the key to the storage. If the option is not provided, the key of the attribute is used instead.
 
----
-
-Override the default options.
-
-```javascript
-Vue.use(VueStorage, {
-  storageType: 'local', // 'local' for localStorage and 'session' for sessionStorage
-});
-```
+Set `session` to `true` to use `sessionStorage` instead of `localStorage`.
 
 ---
 

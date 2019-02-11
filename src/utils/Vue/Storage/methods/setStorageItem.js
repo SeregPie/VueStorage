@@ -1,11 +1,12 @@
 import Lang_isNil from '../../../Lang/isNil';
 
 export default function(key, value) {
-	if (this.storage) {
+	let {storage} = this;
+	if (storage) {
 		if (Lang_isNil(value)) {
-			this.storage.removeItem(key);
+			storage.removeItem(key);
 		} else {
-			this.storage.setItem(key, value);
+			storage.setItem(key, value);
 		}
 	}
 }
