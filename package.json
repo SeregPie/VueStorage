@@ -1,6 +1,6 @@
 {
 	"name": "vuestorage",
-	"version": "18.3.5",
+	"version": "19.0.0",
 	"description": "Allows the components to save and load their data across the browser sessions.",
 	"keywords": [
 		"data",
