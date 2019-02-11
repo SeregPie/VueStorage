@@ -1,7 +1,7 @@
-import {uglify} from 'rollup-plugin-uglify';
+import {terser} from 'rollup-plugin-terser';
 import buble from 'rollup-plugin-buble';
 import path from 'path';
-import resolve from '@seregpie/rollup-plugin-resolve';
+import resolve from 'rollup-plugin-node-resolve';
 
 import {main} from './package.json';
 
@@ -15,6 +15,6 @@ export default {
 	plugins: [
 		resolve(),
 		buble({objectAssign: 'Object.assign'}),
-		uglify({mangle: {properties: {regex: /^ǂ/}}}),
+		terser(),
 	],
 };

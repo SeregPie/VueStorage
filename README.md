@@ -6,16 +6,12 @@ Allows the components to save and load their data across the browser sessions.
 
 [Try it out!](https://seregpie.github.io/VueStorage/)
 
-## dependencies
-
-- [Vue](https://github.com/vuejs/vue)
-
 ## setup
 
 ### npm
 
 ```shell
-npm install vuestorage
+npm i vuestorage
 ```
 
 ### ES module
@@ -50,7 +46,7 @@ new Vue({
     },
     enabled: {
       type: JSON,
-      key: 'myApp.enabled',
+      key: 'myApp/enabled',
       default: true,
     },
   },
@@ -63,7 +59,7 @@ The option `key` is the key to the storage. If the option is not provided, the k
 
 ---
 
-Override default options.
+Override the default options.
 
 ```javascript
 Vue.use(VueStorage, {
@@ -73,7 +69,7 @@ Vue.use(VueStorage, {
 
 ---
 
-Provide functions for the key and the default value to dynamically re-evaluate stored data.
+Provide functions for the key and the default value to dynamically re-evaluate the stored data.
 
 ```javascript
 {

@@ -1,24 +1,24 @@
-import Function_constant from '/utils/Function/constant';
-import Function_isFunction from '/utils/Function/isFunction';
-import Function_noop from '/utils/Function/noop';
-import Lang_isNil from '/utils/Lang/isNil';
-import Object_isObject from '/utils/Object/isObject';
-import VueStorage from '/utils/Vue/Storage';
+import Function_constant from './utils/Function/constant';
+import Function_isFunction from './utils/Function/isFunction';
+import Function_noop from './utils/Function/noop';
+import Lang_isNil from './utils/Lang/isNil';
+import Object_isObject from './utils/Object/isObject';
+import VueStorage from './utils/Vue/Storage';
 
 let storage;
 
 export default {
 	install(Vue, {
-		storageType = VueStorage.props.ǂstorageType.default,
+		storageType = VueStorage.props.storageType.default,
 	} = {}) {
 		Object.assign(Vue.config.optionMergeStrategies, {
-			stored(toVal, fromVal) {
-				return {...fromVal, ...toVal};
+			stored(parent, child) {
+				return {...parent, ...child};
 			},
 		});
 		storage = new (Vue.extend(VueStorage))({
 			propsData: {
-				ǂstorageType: storageType,
+				storageType: storageType,
 			},
 		});
 		Vue.mixin(this);
@@ -75,7 +75,7 @@ export default {
 				computed[key] = {
 					get() {
 						let storageKey = getStorageKey();
-						let value =  storage.ǂgetItem(storageKey);
+						let value =  storage.getItem(storageKey);
 						if (Lang_isNil(value)) {
 							value = getDefaultValue();
 						} else {
@@ -88,7 +88,7 @@ export default {
 						if (!Lang_isNil(value)) {
 							value = stringifyValue(value);
 						}
-						storage.ǂsetItem(storageKey, value);
+						storage.setItem(storageKey, value);
 					},
 				};
 			});
