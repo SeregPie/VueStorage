@@ -46,10 +46,10 @@ new Vue({
         return ['Red', 'Green', 'Blue'];
       },
     },
-    enabled: {
+    disabled: {
       type: JSON,
-      key: 'myApp/enabled',
-      default: true,
+      key: 'myApp/disabled',
+      default: false,
       session: true,
     },
   },
