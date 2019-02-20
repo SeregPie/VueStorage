@@ -42,7 +42,9 @@ new Vue({
     title: String,
     colorPalette: {
       type: JSON,
-      default: ['Red', 'Green', 'Blue'],
+      default() {
+        return ['Red', 'Green', 'Blue'];
+      },
     },
     enabled: {
       type: JSON,
