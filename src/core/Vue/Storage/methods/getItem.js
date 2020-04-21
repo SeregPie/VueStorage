@@ -1,12 +1,14 @@
-import Object_isNullish from '../../../Object/isNullish';
+import Vue from 'vue';
 
 export default function(key) {
-	let value = this.items[key];
-	if (Object_isNullish(value)) {
+	let {items} = this;
+	let item = items.get(key);
+	if (!item) {
 		let {storage} = this;
-		if (storage) {
-			value = storage.getItem(key);
-		}
+		let value = storage ? storage.getItem(key) : null;
+		item = Vue.observable({value});
+		items.set(key, item);
 	}
+	let {value} = item;
 	return value;
 }
