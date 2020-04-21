@@ -32,7 +32,7 @@ Vue.use(VueStorage);
 <script src="https://unpkg.com/vuestorage"></script>
 ```
 
-If Vue is detected, the plugin will be installed automatically.
+The plugin is globally available as `VueStorage`. If Vue is detected, the plugin is installed automatically.
 
 ## usage
 

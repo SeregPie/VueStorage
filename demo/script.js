@@ -2,11 +2,10 @@
 
 	new Vue({
 		el: '#app',
-
+		vuetify: new Vuetify(),
 		data: {
 			storageKey: 'test',
 		},
-
 		stored: {
 			checkedNames: {
 				type: JSON,

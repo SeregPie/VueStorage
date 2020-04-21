@@ -3,38 +3,41 @@
 	<head>
 		<meta charset="utf-8"/>
 		<meta
-			content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+			content="width=device-width,initial-scale=1"
 			name="viewport"
 		/>
 		<title>VueStorage</title>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.7/vue.min.js"></script>
 		<style>
 			[v-cloak] {
 				display: none;
 			}
 		</style>
-		<script src="VueStorage.js"></script>
 		<link
-			href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
+			href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
 			rel="stylesheet"
 		/>
 		<link
-			href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/1.5.2/vuetify.min.css"
+			href="https://unpkg.com/@mdi/font@5.1.45/css/materialdesignicons.min.css"
 			rel="stylesheet"
 		/>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/1.5.2/vuetify.min.js"></script>
+		<link
+			href="https://unpkg.com/vuetify@2.2.22/dist/vuetify.min.css"
+			rel="stylesheet"
+		/>
+		<script src="https://unpkg.com/core-js-bundle@3.6.5/minified.js"></script>
+		<script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+		<script src="https://unpkg.com/vuetify@2.2.22/dist/vuetify.min.js"></script>
+		<script src="./index.js"></script>
 	</head>
 	<body>
 		<v-app
-			v-cloak
 			id="app"
+			v-cloak
 		>
-			<v-toolbar
+			<v-app-bar
 				app
 				color="primary"
 				dark
-				dense
 			>
 				<v-toolbar-title>VueStorage</v-toolbar-title>
 				<v-spacer></v-spacer>
@@ -43,71 +46,58 @@
 					icon
 					target="_blank"
 				>
-				<svg
-					style="
-						fill: currentColor;
-						height: 24px;
-						width: 24px;
-					"
-					viewBox="0 0 16 16"
-				><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+					<v-icon>mdi-github</v-icon>
 				</v-btn>
-			</v-toolbar>
+			</v-app-bar>
 			<v-content>
 				<v-container
 					fill-height
-					grid-list-xl
+					justify-center
 				>
-					<v-layout
-						align-center
-						justify-center
+					<div
+						style="
+							max-width: 400px;
+							width: 100%;
+						"
 					>
-						<v-flex
-							style="
-								max-width: 400px;
-								width: 100%;
-							"
-						>
-							<v-layout column>
-								<v-flex>Check some boxes and reload the page. The boxes will remain checked. If you open a second tab in your browser, the changes to the checkboxes will be reflected between the tabs immediately.</v-flex>
-								<v-flex>
-									<v-input
-										label="checked names"
+						<div
+							class="pa-2"
+						>Check some boxes and reload the page. The boxes will remain checked. If you open a second tab in your browser, the changes to the checkboxes will be reflected between the tabs immediately.</div>
+						<div class="pa-2">
+							<v-input
+								label="checked names"
+								hide-details
+							></v-input>
+							<div
+								style="
+									display: flex;
+									flex-wrap: wrap;
+								"
+							>
+								<div
+									v-for="name in ['Jack', 'John', 'Mike']"
+									style="flex: 1 1 0%;"
+								>
+									<v-checkbox
+										class="ma-0"
+										v-model="checkedNames"
+										:label="name"
+										:value="name"
 										hide-details
-									></v-input>
-									<div
-										style="
-											display: flex;
-											flex-wrap: wrap;
-										"
-									>
-										<div
-											v-for="name in ['Jack', 'John', 'Mike']"
-											style="flex: 1 1 0%;"
-										>
-											<v-checkbox
-												v-model="checkedNames"
-												:label="name"
-												:value="name"
-												class="ma-0"
-												hide-details
-											></v-checkbox>
-										</div>
-									</div>
-									<div><pre>{{ JSON.stringify(checkedNames) }}</pre></div>
-								</v-flex>
-								<v-flex>
-									<v-text-field
-										v-model="storageKey"
-										box
-										hint="Change this to switch between stored items."
-										label="storage key"
-										persistent-hint
-									></v-text-field>
-								</v-flex>
-							</v-layout>
-						</v-flex>
-					</v-layout>
+									></v-checkbox>
+								</div>
+							</div>
+						</div>
+						<div class="pa-2">
+							<v-text-field
+								v-model="storageKey"
+								filled
+								hint="Change this to switch between stored items."
+								label="storage key"
+								persistent-hint
+							></v-text-field>
+						</div>
+					</div>
 				</v-container>
 			</v-content>
 		</v-app>

@@ -1,13 +1,13 @@
-import Function_cast from './utils/Function/cast';
-import Function_constant from './utils/Function/constant';
-import Function_identity from './utils/Function/identity';
-import Function_isFunction from './utils/Function/isFunction';
-import Function_noop from './utils/Function/noop';
-import Lang_isNil from './utils/Lang/isNil';
-import Lang_isUndefined from './utils/Lang/isUndefined';
-import Object_isObject from './utils/Object/isObject';
-import VueLocalStorage from './utils/Vue/LocalStorage';
-import VueSessionStorage from './utils/Vue/SessionStorage';
+import Function_cast from './core/Function/cast';
+import Function_constant from './core/Function/constant';
+import Function_identity from './core/Function/identity';
+import Function_is from './core/Function/is';
+import Function_noop from './core/Function/noop';
+import Object_is from './core/Object/is';
+import Object_isNullish from './core/Object/isNullish';
+import Object_isUndefined from './core/Object/isUndefined';
+import VueLocalStorage from './core/Vue/LocalStorage';
+import VueSessionStorage from './core/Vue/SessionStorage';
 
 export default {
 	install(Vue) {
@@ -45,8 +45,8 @@ export default {
 					parseValue = JSON.parse;
 					stringifyValue = JSON.stringify;
 				} else
-				if (Object_isObject(def)) {
-					if (!Lang_isUndefined(def.key)) {
+				if (Object_is(def)) {
+					if (!Object_isUndefined(def.key)) {
 						getKey = Function_cast(def.key);
 					}
 					if (def.type === String) {
@@ -56,18 +56,18 @@ export default {
 						parseValue = JSON.parse;
 						stringifyValue = JSON.stringify;
 					} else
-					if (Object_isObject(def.type)) {
-						if (Function_isFunction(def.type.parse)) {
+					if (Object_is(def.type)) {
+						if (Function_is(def.type.parse)) {
 							parseValue = def.type.parse;
 						}
-						if (Function_isFunction(def.type.stringify)) {
+						if (Function_is(def.type.stringify)) {
 							stringifyValue = def.type.stringify;
 						}
 					}
-					if (!Lang_isUndefined(def.default)) {
+					if (!Object_isUndefined(def.default)) {
 						getDefaultValue = Function_cast(def.default);
 					}
-					if (!Lang_isUndefined(def.session)) {
+					if (!Object_isUndefined(def.session)) {
 						getSession = Function_cast(def.session);
 					}
 				}
@@ -79,7 +79,7 @@ export default {
 						let key = getKey.call(this);
 						let storage = getStorage.call(this);
 						let value =  storage.getItem(key);
-						if (Lang_isNil(value)) {
+						if (Object_isNullish(value)) {
 							value = getDefaultValue.call(this);
 						} else {
 							value = parseValue.call(this, value);
