@@ -86,7 +86,7 @@ Creates a reference to a stored item.
 | argument | description |
 | ---: | :--- |
 | `key` | A string as the key. Use a reference or a function to allow reactivity. |
-| `type` | An object with `parse` and `stringify` to manage how the data is stored. Use `Boolean`, `Number` or `String` for a predefined functionality. |
+| `type` | An object with `parse` and `stringify` functions to manage how the data is stored. Use `Boolean`, `Number` or `String` for a predefined functionality. |
 | `default` | Anything as the default value that is returned if the key does not exist. Use a reference or a function to allow reactivity. |
 | `session` | If `true`, the session storage is used instead of the local storage. Use a reference or a function to allow reactivity. |
 
