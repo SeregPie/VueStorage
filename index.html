@@ -25,9 +25,11 @@
 			rel="stylesheet"
 		/>
 		<script src="https://unpkg.com/core-js-bundle@3.6.5/minified.js"></script>
-		<script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
-		<script src="https://unpkg.com/vuetify@2.2.28/dist/vuetify.min.js"></script>
+		<script src="https://unpkg.com/vue@2.6.11/dist/vue.min.js"></script>
+		<script src="https://unpkg.com/@vue/composition-api@0.5.0/dist/vue-composition-api.umd.min.js"></script>
+		<script>Vue.use(vueCompositionApi.default)</script>
 		<script src="./index.js"></script>
+		<script src="https://unpkg.com/vuetify@2.2.28/dist/vuetify.min.js"></script>
 	</head>
 	<body>
 		<v-app

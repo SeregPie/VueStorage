@@ -11,96 +11,109 @@ Allows the components to save and load their data across the browser sessions.
 ### npm
 
 ```shell
-npm i vuestorage
+npm i @seregpie/vue-storage
 ```
 
 ### ES module
 
-Install the plugin globally.
-
 ```javascript
-import Vue from 'vue';
-import VueStorage from 'vuestorage';
-
-Vue.use(VueStorage);
+import {
+  localStorage,
+  sessionStorage,
+  stored,
+} from '@seregpie/vue-storage';
 ```
 
 ### browser
 
 ```html
 <script src="https://unpkg.com/vue"></script>
-<script src="https://unpkg.com/vuestorage"></script>
+<script src="https://unpkg.com/@seregpie/vue-storage"></script>
 ```
 
-The plugin is globally available as `VueStorage`. If Vue is detected, the plugin is installed automatically.
+The plugin is globally available as `VueStorage`.
 
 ## usage
 
 ```javascript
-new Vue({
-  stored: {
-    title: String,
-    colorPalette: {
-      type: JSON,
-      default() {
-        return ['Red', 'Green', 'Blue'];
-      },
-    },
-    disabled: {
-      type: JSON,
-      key: 'myApp/disabled',
-      default: false,
-      session: true,
-    },
+import {ref} from 'vue';
+import {stored} from '@seregpie/vue-storage';
+
+export default {
+  props: {
+    userID: Number,
+    userName: String,
   },
+  setup(props) {
+    let displayedUserName = stored(
+      () => `my-app/users/${props.userID}/name`,
+      {default: () => props.userName},
+    );
+    let drawerVisible = stored('my-app/drawer/visible', {
+      default: false,
+      type: Boolean,
+    });
+    let defaultColorPalette = ref(['FireBrick', 'PaleTurquoise', 'Turquoise']);
+    let colorPalette = stored('my-app/color-palette', {
+      default: defaultColorPalette,
+      session: true,
+      type: JSON,
+    });
+    return {
+      colorPalette,
+      defaultColorPalette,
+      displayedUserName,
+      drawerVisible,
+    };
+  },
+};
+```
+
+## API
+
+### stored
+
+```
+stored(key, {
+  type: String,
+  default: null,
+  session: false,
+})
+```
+
+Creates a reference to a stored item.
+
+| argument | description |
+| ---: | :--- |
+| `key` | A string as the key. Use a reference or a function to allow reactivity. |
+| `type` | An object with `parse` and `stringify` to manage how the data is stored. Use `Boolean`, `Number` or `String` for a predefined functionality. |
+| `default` | Anything as the default value that is returned if the key does not exist. Use a reference or a function to allow reactivity. |
+| `session` | If `true`, the session storage is used instead of the local storage. Use a reference or a function to allow reactivity. |
+
+Returns the created reference.
+
+```javascript
+let numbers = stored('my-app/numbers', {
+  type: {
+    parse: (string => string.split('|').map(Number)),
+    stringify: (array => array.join('|')),
+  },
+  default: [],
 });
 ```
 
-The option `type` manages how the data is stored. Two types are available: `String` and `JSON`. Default type is `String`.
+### localStorage
 
-The option `key` is the key to the storage. If the option is not provided, the key of the attribute is used instead.
-
-Set `session` to `true` to use `sessionStorage` instead of `localStorage`.
-
----
-
-Provide functions for the key and the default value to dynamically re-evaluate the stored data.
+Uses the same API as [window.localStorage](https://developer.mozilla.org/docs/Web/API/Window/localStorage).
 
 ```javascript
-{
-  props: {
-    userId: Number,
-    userName: String,
-  },
-  stored: {
-    displayedUserName: {
-      key() {
-        return `myApp/users/${this.userId}/name`;
-      },
-      default() {
-        return this.userName;
-      },
-    },
-  },
-}
+import {localStorage} from '@seregpie/vue-storage';
+
+let key = 'my-app/title';
+let title = localStorage.getItem(key);
+localStorage.removeItem(key);
 ```
 
----
+### sessionStorage
 
-Define custom `parse` and `stringify` functions to manage how the data is stored.
-
-```javascript
-stored: {
-  fancyNumbers: {
-    type: {
-      parse(v) {
-        return v.split('|').map(v => Number.parseInt(v));
-      },
-      stringify(v) {
-        return v.join('|');
-      },
-    },
-    default: [],
-  },
-}
-```
+Uses the same API as [window.sessionStorage](https://developer.mozilla.org/docs/Web/API/Window/sessionStorage).

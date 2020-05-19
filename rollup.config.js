@@ -1,5 +1,7 @@
 import {terser} from 'rollup-plugin-terser';
 import buble from '@rollup/plugin-buble';
+import commonjs from '@rollup/plugin-commonjs';
+import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import serve from 'rollup-plugin-serve';
 
@@ -7,7 +9,9 @@ import {main} from './package.json';
 
 let plugins = [
 	resolve(),
-	buble({objectAssign: 'Object.assign'}),
+	replace({'process.env.NODE_ENV': JSON.stringify('production')}),
+	commonjs(),
+	buble(),
 	terser(),
 ];
 
@@ -19,7 +23,7 @@ if (process.env.ROLLUP_WATCH) {
 }
 
 let globals = {
-	'vue': 'Vue',
+	'@vue/composition-api': 'vueCompositionApi',
 };
 
 export default {

@@ -1,7 +1,9 @@
-import VueStored from './VueStored';
+import localStorage from './localStorage';
+import sessionStorage from './sessionStorage';
+import stored from './stored';
 
-export default VueStored;
-
-if (typeof window !== 'undefined' && window.Vue) {
-	window.Vue.use(VueStored);
-}
+export {
+	localStorage,
+	sessionStorage,
+	stored,
+};

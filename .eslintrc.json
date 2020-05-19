@@ -1,4 +1,1 @@
-{
-	"extends": "seregpie",
-	"parser": "babel-eslint"
-}
+{"extends": "seregpie"}
