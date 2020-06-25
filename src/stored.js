@@ -17,7 +17,7 @@ import typeString from './types/String';
 export default function(key, {
 	default: defaultValue = null,
 	session = false,
-	type = String,
+	type = JSON,
 } = EMPTY_OBJ) {
 	let toRef = (value => {
 		if (isRef(value)) {

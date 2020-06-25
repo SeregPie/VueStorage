@@ -9,7 +9,6 @@
 		setup: function() {
 			var storageKey = ref('test');
 			var checkedNames = stored(storageKey, {
-				type: JSON,
 				default: function() {
 					return [];
 				},

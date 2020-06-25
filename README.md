@@ -47,17 +47,19 @@ export default {
   setup(props) {
     let displayedUserName = stored(
       () => `my-app/users/${props.userID}/name`,
-      {default: () => props.userName},
+      {
+        type: String,
+        default: () => props.userName,
+      },
     );
     let drawerVisible = stored('my-app/drawer/visible', {
-      default: false,
       type: Boolean,
+      default: false,      
     });
     let defaultColorPalette = ref(['FireBrick', 'PaleTurquoise', 'Turquoise']);
     let colorPalette = stored('my-app/color-palette', {
       default: defaultColorPalette,
       session: true,
-      type: JSON,
     });
     return {
       colorPalette,
@@ -75,7 +77,7 @@ export default {
 
 ```
 stored(key, {
-  type: String,
+  type: JSON,
   default: null,
   session: false,
 })
@@ -91,6 +93,8 @@ Creates a reference to a stored item.
 | `session` | If `true`, the session storage is used instead of the local storage. Use a reference or a function to allow reactivity. |
 
 Returns the created reference.
+
+---
 
 ```javascript
 let numbers = stored('my-app/numbers', {
