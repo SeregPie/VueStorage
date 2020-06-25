@@ -1,18 +1,18 @@
 import {ref} from '@vue/composition-api';
 
 export default class {
-	constructor(target) {
+	constructor(storage) {
 		Object.assign(this, {
 			_items: {},
-			_target: target,
+			_storage: storage,
 		});
 	}
 	getItem(key) {
 		let {_items: items} = this;
 		let item = items[key];
 		if (!item) {
-			let {_target: target} = this;
-			let value = target ? target.getItem(key) : null;
+			let {_storage: storage} = this;
+			let value = storage ? storage.getItem(key) : null;
 			item = ref(value);
 			items[key] = item;
 		}
@@ -20,9 +20,9 @@ export default class {
 		return value;
 	}
 	setItem(key, value) {
-		let {_target: target} = this;
-		if (target) {
-			target.setItem(key, value);
+		let {_storage: storage} = this;
+		if (storage) {
+			storage.setItem(key, value);
 		}
 		this._setItem(key, value);
 	}
@@ -34,9 +34,9 @@ export default class {
 		}
 	}
 	removeItem(key) {
-		let {_target: target} = this;
-		if (target) {
-			target.removeItem(key);
+		let {_storage: storage} = this;
+		if (storage) {
+			storage.removeItem(key);
 		}
 		this._removeItem(key);
 	}
@@ -48,9 +48,9 @@ export default class {
 		}
 	}
 	clear() {
-		let {_target: target} = this;
-		if (target) {
-			target.clear();
+		let {_storage: storage} = this;
+		if (storage) {
+			storage.clear();
 		}
 		this._clear();
 	}
