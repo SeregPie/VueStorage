@@ -15,8 +15,8 @@
 				},
 			});
 			return {
-				checkedNames,
-				storageKey,
+				checkedNames: checkedNames,
+				storageKey: storageKey,
 			};
 		},
 	});
