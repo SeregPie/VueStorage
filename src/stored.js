@@ -1,7 +1,6 @@
 import {
 	computed,
-	isRef,
-	ref,
+	unref,
 } from '@vue/composition-api';
 import {
 	EMPTY_OBJ,
@@ -19,22 +18,11 @@ export default function(key, {
 	session = false,
 	type = JSON,
 } = EMPTY_OBJ) {
-	let toRef = (value => {
-		if (isRef(value)) {
-			return value;
-		}
-		if (isFunction(value)) {
-			return computed(value);
-		}
-		return ref(value);
-	});
-	let keyRef = toRef(key);
-	let defaultValueRef = toRef(defaultValue);
-	let sessionRef = toRef(session);
-	let storageRef = computed(() => {
-		let session = sessionRef.value;
-		return session ? sessionStorage : localStorage;
-	});
+	let toGetter = (v => (() => unref(isFunction(v) ? v() : v)));
+	let getKey = toGetter(key);
+	let getDefaultValue = toGetter(defaultValue);
+	let getSession = toGetter(session);
+	let getStorage = (() => getSession() ? sessionStorage : localStorage);
 	let {
 		parse,
 		stringify,
@@ -51,20 +39,19 @@ export default function(key, {
 	})(type);
 	return computed({
 		get() {
-			let storage = storageRef.value;
-			let key = keyRef.value;
+			let storage = getStorage();
+			let key = getKey();
 			let value = storage.getItem(key);
 			if (value == null) {
-				let defaultValue = defaultValueRef.value;
-				value = defaultValue;
+				value = getDefaultValue();
 			} else {
 				value = parse(value);
 			}
 			return value;
 		},
 		set(value) {
-			let storage = storageRef.value;
-			let key = keyRef.value;
+			let storage = getStorage();
+			let key = getKey();
 			if (value == null) {
 				storage.removeItem(key);
 			} else {
