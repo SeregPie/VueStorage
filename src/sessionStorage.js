@@ -8,5 +8,5 @@ export default (() => {
 			return new Storage(sessionStorage);
 		}
 	}
-	return new Storage(null);
+	return new Storage();
 })();

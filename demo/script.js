@@ -9,9 +9,7 @@
 		setup: function() {
 			var storageKey = ref('test');
 			var checkedNames = stored(storageKey, {
-				default: function() {
-					return [];
-				},
+				default: [],
 			});
 			return {
 				checkedNames: checkedNames,

@@ -1,6 +1,6 @@
 import {
 	computed,
-	unref,
+	isRef,
 } from '@vue/composition-api';
 import {
 	EMPTY_OBJ,
@@ -18,7 +18,15 @@ export default function(key, {
 	session = false,
 	type = JSON,
 } = EMPTY_OBJ) {
-	let toGetter = (v => (() => unref(isFunction(v) ? v() : v)));
+	let toGetter = (value => {
+		if (isFunction(value)) {
+			return value;
+		}
+		if (isRef(value)) {
+			return (() => value.value);
+		}
+		return (() => value);
+	});
 	let getKey = toGetter(key);
 	let getDefaultValue = toGetter(defaultValue);
 	let getSession = toGetter(session);

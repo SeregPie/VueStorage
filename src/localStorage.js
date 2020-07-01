@@ -19,5 +19,5 @@ export default (() => {
 			return that;
 		}
 	}
-	return new Storage(null);
+	return new Storage();
 })();

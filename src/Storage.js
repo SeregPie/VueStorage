@@ -1,7 +1,7 @@
 import {ref} from '@vue/composition-api';
 
 export default class {
-	constructor(storage) {
+	constructor(storage = null) {
 		Object.assign(this, {
 			_items: {},
 			_storage: storage,
