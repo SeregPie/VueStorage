@@ -32,8 +32,8 @@
 	</head>
 	<body>
 		<v-app
-			id="app"
 			v-cloak
+			id="app"
 		>
 			<v-app-bar
 				app
@@ -61,9 +61,12 @@
 							width: 100%;
 						"
 					>
-						<div
-							class="pa-2"
-						>Check some boxes and reload the page. The boxes will remain checked. If you open a second tab in your browser, the changes to the checkboxes will be reflected between the tabs immediately.</div>
+						<div class="pa-2">
+							<v-alert
+								class="ma-0"
+								type="info"
+							>Check some boxes and reload the page. The boxes will remain checked. If you open a second tab in your browser, the changes to the checkboxes will be reflected between the tabs immediately.</v-alert>
+						</div>
 						<div class="pa-2">
 							<v-input
 								label="checked names"
@@ -80,22 +83,22 @@
 									style="flex: 1 1 0%;"
 								>
 									<v-checkbox
-										class="ma-0"
+										v-model="checkedNames"
 										:label="name"
 										:value="name"
+										class="ma-0"
 										hide-details
-										v-model="checkedNames"
 									></v-checkbox>
 								</div>
 							</div>
 						</div>
 						<div class="pa-2">
 							<v-text-field
+								v-model="storageKey"
 								filled
 								hint="Change this to switch between stored items."
 								label="storage key"
 								persistent-hint
-								v-model="storageKey"
 							></v-text-field>
 						</div>
 					</div>
