@@ -1,6 +1,6 @@
 (function() {
 
-	var ref = vueCompositionApi.ref;
+	var ref = VueCompositionAPI.ref;
 	var stored = VueStorage.stored;
 
 	new Vue({

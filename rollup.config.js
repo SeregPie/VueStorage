@@ -23,7 +23,7 @@ if (process.env.ROLLUP_WATCH) {
 }
 
 let globals = {
-	'@vue/composition-api': 'vueCompositionApi',
+	'@vue/composition-api': 'VueCompositionAPI',
 };
 
 export default {
