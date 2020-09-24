@@ -1,6 +1,6 @@
 {
 	"name": "@seregpie/vue-storage",
-	"version": "1.0.0-alpha.4",
+	"version": "1.0.0",
 	"description": "Allows the components to save and load their data across the browser sessions.",
 	"keywords": [
 		"data",
