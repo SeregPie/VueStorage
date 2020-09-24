@@ -44,6 +44,8 @@ The plugin is globally available as `VueStorage`.
 
 ## usage
 
+### Composition API
+
 ```javascript
 import {ref} from 'vue';
 import {stored} from '@seregpie/vue-storage';
@@ -61,14 +63,14 @@ export default {
         default: () => props.userName,
       },
     );
-    let drawerVisible = stored('myApp/drawer/visible', {
+    let drawerVisible = stored('drawerVisible', {
       type: Boolean,
       default: false,
+      session: true,
     });
     let defaultColorPalette = ref(['FireBrick', 'PaleTurquoise', 'Turquoise']);
-    let colorPalette = stored('myApp/color-palette', {
+    let colorPalette = stored('colorPalette', {
       default: defaultColorPalette,
-      session: true,
     });
     return {
       colorPalette,
@@ -76,6 +78,58 @@ export default {
       displayedUserName,
       drawerVisible,
     };
+  },
+};
+```
+
+### Options API
+
+Install the plugin.
+
+```javascript
+import {createApp} from 'vue'
+import VueStorage from '@seregpie/vue-storage';
+
+let app = createApp({/*...*/});
+app.use(VueStorage);
+app.mount('body');
+```
+
+---
+
+Define options.
+
+```javascript
+export default {
+  props: {
+    userID: Number,
+    userName: String,
+  },
+  data() {
+    return {
+      defaultColorPalette: ['FireBrick', 'PaleTurquoise', 'Turquoise'],
+    },
+  },
+  stored: {
+    colorPalette: {
+      default() {
+        return this.defaultColorPalette;
+      },
+    },
+    displayedUserName: {
+      key() {
+        return `myApp/users/${this.userID}/name`;
+      },
+      type: String,
+      default() {
+        return this.userName;
+      },
+    },
+    drawerVisible: {
+      type: Boolean,
+      default: false,
+      session: true,
+    },
   },
 };
 ```

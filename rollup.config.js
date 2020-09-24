@@ -36,5 +36,6 @@ export default {
 		format: 'umd',
 		name: 'VueStorage',
 		globals,
+		exports: 'named',
 	},
 };
