@@ -1,17 +1,18 @@
 import {terser} from 'rollup-plugin-terser';
-import buble from '@rollup/plugin-buble';
-import commonjs from '@rollup/plugin-commonjs';
+import babel from '@rollup/plugin-babel';
+import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
-import resolve from '@rollup/plugin-node-resolve';
 import serve from 'rollup-plugin-serve';
 
 import {main} from './package.json';
 
 let plugins = [
-	resolve(),
+	nodeResolve(),
 	replace({'process.env.NODE_ENV': JSON.stringify('production')}),
-	commonjs(),
-	buble(),
+	babel({
+		babelHelpers: 'bundled',
+		presets: ['@babel/preset-env'],
+	}),
 	terser(),
 ];
 
@@ -23,7 +24,7 @@ if (process.env.ROLLUP_WATCH) {
 }
 
 let globals = {
-	'@vue/composition-api': 'VueCompositionAPI',
+	'vue-demi': 'VueDemi',
 };
 
 export default {

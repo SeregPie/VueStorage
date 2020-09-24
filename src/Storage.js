@@ -1,4 +1,4 @@
-import {ref} from '@vue/composition-api';
+import {ref} from 'vue-demi';
 
 export default class {
 	constructor(storage = null) {

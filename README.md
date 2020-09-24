@@ -2,6 +2,8 @@
 
 Allows the components to save and load their data across the browser sessions.
 
+Works with Vue 2 & 3 by the power of [Vue Demi](https://github.com/antfu/vue-demi)!
+
 ## demo
 
 [Try it out!](https://seregpie.github.io/VueStorage/)
@@ -27,7 +29,14 @@ import {
 ### browser
 
 ```html
-<script src="https://unpkg.com/vue"></script>
+<!-- if using Vue 2 -->
+<script src="https://unpkg.com/vue@2"></script>
+<script src="https://unpkg.com/@vue/composition-api"></script>
+
+<!-- if using Vue 3 -->
+<script src="https://unpkg.com/vue@3"></script>
+
+<script src="https://unpkg.com/vue-demi"></script>
 <script src="https://unpkg.com/@seregpie/vue-storage"></script>
 ```
 
@@ -46,18 +55,18 @@ export default {
   },
   setup(props) {
     let displayedUserName = stored(
-      () => `my-app/users/${props.userID}/name`,
+      () => `myApp/users/${props.userID}/name`,
       {
         type: String,
         default: () => props.userName,
       },
     );
-    let drawerVisible = stored('my-app/drawer/visible', {
+    let drawerVisible = stored('myApp/drawer/visible', {
       type: Boolean,
-      default: false,      
+      default: false,
     });
     let defaultColorPalette = ref(['FireBrick', 'PaleTurquoise', 'Turquoise']);
-    let colorPalette = stored('my-app/color-palette', {
+    let colorPalette = stored('myApp/color-palette', {
       default: defaultColorPalette,
       session: true,
     });
@@ -97,7 +106,7 @@ Returns the created reference.
 ---
 
 ```javascript
-let numbers = stored('my-app/numbers', {
+let numbers = stored('myApp/numbers', {
   type: {
     parse: (string => string.split('|').map(Number)),
     stringify: (array => array.join('|')),
@@ -113,7 +122,7 @@ Uses the same API as [window.localStorage](https://developer.mozilla.org/docs/We
 ```javascript
 import {localStorage} from '@seregpie/vue-storage';
 
-let key = 'my-app/title';
+let key = 'myApp/title';
 let title = localStorage.getItem(key);
 localStorage.removeItem(key);
 ```

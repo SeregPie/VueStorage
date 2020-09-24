@@ -1,11 +1,11 @@
 import {
-	computed,
-	isRef,
-} from '@vue/composition-api';
-import {
 	EMPTY_OBJ,
 	isFunction,
 } from '@vue/shared';
+import {
+	computed,
+	isRef,
+} from 'vue-demi';
 
 import localStorage from './localStorage';
 import sessionStorage from './sessionStorage';
