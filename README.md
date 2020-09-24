@@ -171,7 +171,7 @@ let numbers = stored('myApp/numbers', {
 
 ### localStorage
 
-Uses the same API as [window.localStorage](https://developer.mozilla.org/docs/Web/API/Window/localStorage).
+Uses the same API as [`window.localStorage`](https://developer.mozilla.org/docs/Web/API/Window/localStorage).
 
 ```javascript
 import {localStorage} from '@seregpie/vue-storage';
@@ -183,4 +183,4 @@ localStorage.removeItem(key);
 
 ### sessionStorage
 
-Uses the same API as [window.sessionStorage](https://developer.mozilla.org/docs/Web/API/Window/sessionStorage).
+Uses the same API as [`window.sessionStorage`](https://developer.mozilla.org/docs/Web/API/Window/sessionStorage).
