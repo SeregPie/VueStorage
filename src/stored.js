@@ -1,7 +1,5 @@
-import {
-	EMPTY_OBJ,
-	isFunction,
-} from '@vue/shared';
+import Function_is from './@core/Function/is';
+
 import {
 	computed,
 	isRef,
@@ -17,9 +15,9 @@ export default function(key, {
 	default: defaultValue = null,
 	session = false,
 	type = JSON,
-} = EMPTY_OBJ) {
+} = {}) {
 	let toGetter = (value => {
-		if (isFunction(value)) {
+		if (Function_is(value)) {
 			return value;
 		}
 		if (isRef(value)) {

@@ -1,4 +1,5 @@
-import {isFunction} from '@vue/shared';
+import Function_is from './@core/Function/is';
+import Object_mapValues from './@core/Object/mapValues';
 
 import stored from './stored';
 
@@ -7,32 +8,32 @@ export default {
 	beforeCreate() {
 		let {$options} = this;
 		let {
-			computed: dddd,
-			stored: eeee,
+			computed: computedOptions,
+			stored: storedOptions,
 		} = $options;
-		if (eeee) {
-			Object.entries(eeee).forEach(([aaaa, bbbb]) => {
-				bbbb = (() => {
-					let result = {};
-					Object.entries(bbbb).forEach(([key, value]) => {
-						if (isFunction(value)) {
-							value = value.bind(this);
-						}
-						result[key] = value;
-					});
-					return result;
-				})();
-				let {key = aaaa, ...options} = bbbb;
-				let r = stored(key, options);
-				dddd[aaaa] = {
-					get() {
-						return r.value;
-					},
-					set(value) {
-						r.value = value;
-					},
-				};
-			});
+		if (storedOptions) {
+			Object.assign(
+				computedOptions,
+				Object_mapValues(storedOptions, (object, defaultKey) => {
+					let {
+						key = defaultKey,
+						...options
+					} = Object_mapValues(object, value =>
+						Function_is(value)
+							? value.bind(this)
+							: value
+					);
+					let r = stored(key, options);
+					return {
+						get() {
+							return r.value;
+						},
+						set(value) {
+							r.value = value;
+						},
+					};
+				}),
+			);
 		}
 	},
 };
