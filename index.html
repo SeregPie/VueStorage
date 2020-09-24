@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta
+			content="width=device-width,initial-scale=1"
+			name="viewport"
+		/>
+		<title>VueStorage</title>
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+		<link
+			href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://unpkg.com/@mdi/font@5.6.55/css/materialdesignicons.min.css"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://unpkg.com/vuetify@2.3.10/dist/vuetify.min.css"
+			rel="stylesheet"
+		/>
+		<script src="https://unpkg.com/core-js-bundle@3.6.5/minified.js"></script>
+		<script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>
+		<script src="https://unpkg.com/@vue/composition-api@1.0.0-beta.14/dist/vue-composition-api.prod.js"></script>
+		<script src="https://unpkg.com/vue-demi@0.3.3/lib/index.iffe.js"></script>
+		<script src="./index.js"></script>
+		<script src="https://unpkg.com/vuetify@2.3.10/dist/vuetify.min.js"></script>
+	</head>
+	<body>
+		<v-app
+			v-cloak
+			id="app"
+		>
+			<v-app-bar
+				app
+				color="primary"
+				dark
+			>
+				<v-toolbar-title>VueStorage</v-toolbar-title>
+				<v-spacer></v-spacer>
+				<v-btn
+					href="https://github.com/SeregPie/VueStorage"
+					icon
+					target="_blank"
+				>
+					<v-icon>mdi-github</v-icon>
+				</v-btn>
+			</v-app-bar>
+			<v-main>
+				<v-container
+					fill-height
+					justify-center
+				>
+					<div
+						style="
+							max-width: 400px;
+							width: 100%;
+						"
+					>
+						<div class="pa-2">
+							<v-alert
+								class="ma-0"
+								type="info"
+							>Check some boxes and reload the page. The boxes will remain checked. If you open a second tab in your browser, the changes to the checkboxes will be reflected between the tabs immediately.</v-alert>
+						</div>
+						<div class="pa-2">
+							<v-input
+								label="checked names"
+								hide-details
+							></v-input>
+							<div
+								style="
+									display: flex;
+									flex-wrap: wrap;
+								"
+							>
+								<div
+									v-for="name in ['Jack', 'John', 'Mike']"
+									style="flex: 1 1 0%;"
+								>
+									<v-checkbox
+										v-model="checkedNames"
+										:label="name"
+										:value="name"
+										class="ma-0"
+										hide-details
+									></v-checkbox>
+								</div>
+							</div>
+						</div>
+						<div class="pa-2">
+							<v-text-field
+								v-model="storageKey"
+								filled
+								hint="Change this to switch between stored items."
+								label="storage key"
+								persistent-hint
+							></v-text-field>
+						</div>
+					</div>
+				</v-container>
+			</v-main>
+		</v-app>
+		<script src="./demo/script.js"></script>
+	</body>
+</html>

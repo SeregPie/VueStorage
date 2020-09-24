@@ -1,0 +1,42 @@
+{
+	"name": "@seregpie/vue-storage",
+	"version": "1.0.0",
+	"description": "Allows the components to save and load their data across the browser sessions.",
+	"keywords": [
+		"data",
+		"global",
+		"local",
+		"mixin",
+		"plugin",
+		"reactive",
+		"session",
+		"share",
+		"storage",
+		"store",
+		"vue"
+	],
+	"license": "MIT",
+	"author": "Sergej Sintschilin <seregpie@gmail.com>",
+	"files": [],
+	"main": "index.js",
+	"repository": "github:SeregPie/VueStorage",
+	"scripts": {
+		"build": "rollup -c",
+		"prepublishOnly": "npm run build",
+		"serve": "rollup -c -w"
+	},
+	"dependencies": {
+		"vue-demi": "^0.3.3"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.11.6",
+		"@babel/preset-env": "^7.11.5",
+		"@rollup/plugin-babel": "^5.2.1",
+		"eslint": "^7.9.0",
+		"eslint-config-seregpie": "^1.0.1",
+		"rollup": "^2.28.1",
+		"rollup-plugin-serve": "^1.0.4",
+		"rollup-plugin-terser": "^7.0.2",
+		"vue": "^3.0.0"
+	}
+}
