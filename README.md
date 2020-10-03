@@ -2,7 +2,7 @@
 
 Allows the components to save and load their data across the browser sessions.
 
-Works with Vue 2 & 3 by the power of [Vue Demi](https://github.com/antfu/vue-demi)!
+Works for Vue 2 & 3 by the power of [Vue Demi](https://github.com/antfu/vue-demi)!
 
 ## demo
 

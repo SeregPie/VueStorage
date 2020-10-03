@@ -16,6 +16,23 @@
 				storageKey: storageKey,
 			};
 		},
+		/*
+		data: function() {
+			return {
+				storageKey: 'test',
+			};
+		},
+		stored: {
+			checkedNames: {
+				key: function() {
+					return this.storageKey;
+				},
+				default: function() {
+					return [];
+				},
+			},
+		},
+		*/
 	});
 
 })();

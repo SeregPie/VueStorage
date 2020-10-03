@@ -1,9 +1,8 @@
-import Function_is from './@core/Function/is';
-
 import {
 	computed,
 	isRef,
 } from 'vue-demi';
+import {isFunction} from '@vue/shared';
 
 import localStorage from './localStorage';
 import sessionStorage from './sessionStorage';
@@ -17,7 +16,7 @@ export default function(key, {
 	type = JSON,
 } = {}) {
 	let toGetter = (value => {
-		if (Function_is(value)) {
+		if (isFunction(value)) {
 			return value;
 		}
 		if (isRef(value)) {
