@@ -12,12 +12,16 @@ export default {
 		} = $options;
 		if (storedProperties) {
 			let toComputedProperty = ((value, defaultKey) => {
-				let {key = defaultKey, ...options} = value;
-				Object.entries(options).forEach(([key, value]) => {
+				let {
+					key = defaultKey,
+					...options
+				} = Object.entries(value).reduce((object, [key, value]) => {
 					if (isFunction(value)) {
-						options[key] = value.bind(this);
+						value = value.bind(this);
 					}
-				});
+					object[key] = value;
+					return object;
+				}, {});
 				let r = stored(key, options);
 				return {
 					get() {
