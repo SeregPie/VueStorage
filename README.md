@@ -20,16 +20,6 @@ Works for Vue 2 & 3.
 npm i @seregpie/vue-storage
 ```
 
-### ES module
-
-```javascript
-import {
-  localStorage,
-  sessionStorage,
-  stored,
-} from '@seregpie/vue-storage';
-```
-
 ### browser
 
 ```html
@@ -56,12 +46,12 @@ import {stored} from '@seregpie/vue-storage';
 
 export default {
   props: {
-    userID: Number,
+    userId: Number,
     userName: String,
   },
   setup(props) {
     let displayedUserName = stored(
-      () => `myApp/users/${props.userID}/name`,
+      () => `myData/users/${props.userId}/name`,
       {
         type: String,
         default: () => props.userName,
@@ -101,12 +91,12 @@ app.mount('body');
 
 ---
 
-Define options.
+Define the options.
 
 ```javascript
 export default {
   props: {
-    userID: Number,
+    userId: Number,
     userName: String,
   },
   data() {
@@ -122,7 +112,7 @@ export default {
     },
     displayedUserName: {
       key() {
-        return `myApp/users/${this.userID}/name`;
+        return `myData/users/${this.userId}/name`;
       },
       type: String,
       default() {
@@ -164,7 +154,9 @@ Returns the created reference.
 ---
 
 ```javascript
-let numbers = stored('myApp/numbers', {
+import {stored} from '@seregpie/vue-storage';
+
+let numbers = stored('myFancyNumbers', {
   type: {
     parse: (string => string.split('|').map(Number)),
     stringify: (array => array.join('|')),
@@ -180,8 +172,8 @@ Uses the same API as [`window.localStorage`](https://developer.mozilla.org/docs/
 ```javascript
 import {localStorage} from '@seregpie/vue-storage';
 
-let key = 'myApp/title';
-let title = localStorage.getItem(key);
+let key = 'myFancyValue';
+let value = localStorage.getItem(key);
 localStorage.removeItem(key);
 ```
 
