@@ -2,11 +2,15 @@
 
 Allows the components to save and load their data across the browser sessions.
 
-Works for Vue 2 & 3 by the power of [Vue Demi](https://github.com/antfu/vue-demi)!
+Works for Vue 2 & 3.
 
 ## demo
 
 [Try it out!](https://seregpie.github.io/VueStorage/)
+
+## dependencies
+
+- [Vue Demi](https://github.com/antfu/vue-demi)
 
 ## setup
 
