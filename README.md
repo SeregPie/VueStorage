@@ -22,7 +22,7 @@ npm i @seregpie/vue-storage
 
 ---
 
-```js
+```javascript
 import VueStorage, {
   localStorage,
   sessionStorage,
