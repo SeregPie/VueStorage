@@ -20,6 +20,16 @@ Works for Vue 2 & 3.
 npm i @seregpie/vue-storage
 ```
 
+---
+
+```js
+import VueStorage, {
+  localStorage,
+  sessionStorage,
+  stored,
+} from '@seregpie/vue-storage';
+```
+
 ### browser
 
 ```html
