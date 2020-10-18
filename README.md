@@ -138,15 +138,15 @@ let r = stored(key, {
     parse: (string => string.split('|').map(Number)),
     stringify: (array => array.join('|')),
   },
-  default: [15, 16],
+  default: [],
 });
 
-r.value = [23, 42];
-console.log(r.value); // => [23, 42]
-console.log(localStorage.getItem(key)); // => '23|42'
+r.value = [1, 2];
+console.log(r.value); // => [1, 2]
+console.log(localStorage.getItem(key)); // => '1|2'
 
 r.value = null;
-console.log(r.value); // => [15, 16]
+console.log(r.value); // => []
 console.log(localStorage.getItem(key)); // => null
 ```
 
