@@ -61,26 +61,14 @@ export default {
   },
   setup(props) {
     let displayedUserName = stored(
-      () => `myData/users/${props.userId}/name`,
+      () => `myApp/users/${props.userId}/name`,
       {
         type: String,
         default: () => props.userName,
       },
     );
-    let drawerVisible = stored('drawerVisible', {
-      type: Boolean,
-      default: false,
-      session: true,
-    });
-    let defaultColorPalette = ref(['FireBrick', 'PaleTurquoise', 'Turquoise']);
-    let colorPalette = stored('colorPalette', {
-      default: defaultColorPalette,
-    });
     return {
-      colorPalette,
-      defaultColorPalette,
       displayedUserName,
-      drawerVisible,
     };
   },
 };
@@ -99,8 +87,6 @@ app.use(VueStorage);
 app.mount('body');
 ```
 
----
-
 Define the options.
 
 ```javascript
@@ -109,30 +95,15 @@ export default {
     userId: Number,
     userName: String,
   },
-  data() {
-    return {
-      defaultColorPalette: ['FireBrick', 'PaleTurquoise', 'Turquoise'],
-    },
-  },
   stored: {
-    colorPalette: {
-      default() {
-        return this.defaultColorPalette;
-      },
-    },
     displayedUserName: {
       key() {
-        return `myData/users/${this.userId}/name`;
+        return `myApp/users/${this.userId}/name`;
       },
       type: String,
       default() {
         return this.userName;
       },
-    },
-    drawerVisible: {
-      type: Boolean,
-      default: false,
-      session: true,
     },
   },
 };
@@ -154,25 +125,30 @@ Creates a reference to a stored item.
 
 | argument | description |
 | ---: | :--- |
-| `key` | A string as the key. Use a reference or a function to allow reactivity. |
-| `type` | An object with `parse` and `stringify` functions to manage how the data is stored. Use `Boolean`, `Number` or `String` for a predefined functionality. |
-| `default` | Anything as the default value that is returned if the key does not exist. Use a reference or a function to allow reactivity. |
-| `session` | If `true`, the session storage is used instead of the local storage. Use a reference or a function to allow reactivity. |
+| `key` | A string as the key. Can also be a getter function or a `ref`. |
+| `type` | An object with the `parse` and `stringify` functions to manage how the data is stored. Use `Boolean`, `Number` or `String` for a predefined functionality. |
+| `default` | Anything as the default value that is returned if the key does not exist. Can also be a getter function or a `ref`. |
+| `session` | If `true`, the session storage is used instead of the local storage. Can also be a getter function or a `ref`. |
 
 Returns the created reference.
 
----
-
 ```javascript
-import {stored} from '@seregpie/vue-storage';
-
-let numbers = stored('myFancyNumbers', {
+let key = 'myApp/numbers';
+let r = stored(key, {
   type: {
     parse: (string => string.split('|').map(Number)),
     stringify: (array => array.join('|')),
   },
-  default: [],
+  default: [15, 16],
 });
+
+r.value = [23, 42];
+console.log(r.value); // => [23, 42]
+console.log(localStorage.getItem(key)); // => '23|42'
+
+r.value = null;
+console.log(r.value); // => [15, 16]
+console.log(localStorage.getItem(key)); // => null
 ```
 
 ### localStorage
@@ -180,10 +156,8 @@ let numbers = stored('myFancyNumbers', {
 Uses the same API as [`window.localStorage`](https://developer.mozilla.org/docs/Web/API/Window/localStorage).
 
 ```javascript
-import {localStorage} from '@seregpie/vue-storage';
-
-let key = 'myFancyValue';
-let value = localStorage.getItem(key);
+let key = 'myApp/backgroundColor';
+let backgroundColor = localStorage.getItem(key);
 localStorage.removeItem(key);
 ```
 
