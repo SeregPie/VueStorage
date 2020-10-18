@@ -51,7 +51,6 @@ The plugin is globally available as `VueStorage`.
 ### Composition API
 
 ```javascript
-import {ref} from 'vue';
 import {stored} from '@seregpie/vue-storage';
 
 export default {
