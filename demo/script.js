@@ -1,38 +1,24 @@
 (function() {
 
-	var ref = VueCompositionAPI.ref;
-	var stored = VueStorage.stored;
-
 	new Vue({
-		el: '#app',
+		el: '#App',
 		vuetify: new Vuetify(),
-		setup: function() {
-			var storageKey = ref('test');
-			var checkedNames = stored(storageKey, {
-				default: [],
-			});
+		data() {
 			return {
-				checkedNames: checkedNames,
-				storageKey: storageKey,
-			};
-		},
-		/*
-		data: function() {
-			return {
-				storageKey: 'test',
+				items: ['🐭', '🐮', '🐯', '🐰', '🐱', '🐴', '🐵', '🐶', '🐷', '🐸', '🐹', '🐺', '🐻', '🐼', '🦁', '🦊'],
+				storageKey: 'remember',
 			};
 		},
 		stored: {
-			checkedNames: {
-				key: function() {
+			selectedItems: {
+				key() {
 					return this.storageKey;
 				},
-				default: function() {
+				default() {
 					return [];
 				},
 			},
 		},
-		*/
 	});
 
 })();
