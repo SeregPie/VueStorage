@@ -1,40 +1,31 @@
 import {isFunction} from '@vue/shared';
 
+import mapValues from './mapValues';
 import stored from './stored';
 
 export default {
 	computed: {},
 	beforeCreate() {
-		let {$options} = this;
 		let {
 			computed: computedProperties,
 			stored: storedProperties,
-		} = $options;
+		} = this.$options;
 		if (storedProperties) {
-			let toComputedProperty = ((value, defaultKey) => {
+			Object.assign(computedProperties, mapValues(storedProperties, (v, k) => {
 				let {
-					key = defaultKey,
+					key = k,
 					...options
-				} = Object.entries(value).reduce((object, [key, value]) => {
-					if (isFunction(value)) {
-						value = value.bind(this);
-					}
-					object[key] = value;
-					return object;
-				}, {});
+				} = mapValues(v, v => isFunction(v) ? v.bind(this) : v);
 				let r = stored(key, options);
 				return {
 					get() {
 						return r.value;
 					},
-					set(value) {
-						r.value = value;
+					set(v) {
+						r.value = v;
 					},
 				};
-			});
-			Object.entries(storedProperties).forEach(([key, value]) => {
-				computedProperties[key] = toComputedProperty(value, key);
-			});
+			}));
 		}
 	},
 };
