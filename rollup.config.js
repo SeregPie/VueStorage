@@ -11,7 +11,9 @@ let plugins = [
 	replace({'process.env.NODE_ENV': '"production"'}),
 	babel({
 		babelHelpers: 'bundled',
-		presets: ['@babel/preset-env'],
+		presets: [['@babel/preset-env', {
+			targets: ['defaults', 'not IE 11'],
+		}]],
 	}),
 	terser(),
 ];
