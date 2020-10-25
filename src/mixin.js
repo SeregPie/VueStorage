@@ -6,18 +6,20 @@ import stored from './stored';
 export default {
 	computed: {},
 	beforeCreate() {
+		let {$options} = this;
 		let {
 			computed: computedProperties,
 			stored: storedProperties,
-		} = this.$options;
+		} = $options;
 		if (storedProperties) {
-			Object.assign(computedProperties, mapValues(storedProperties, (v, k) => {
+			computedProperties = {...computedProperties};
+			Object.entries(storedProperties).forEach(([k, v]) => {
 				let {
 					key = k,
 					...options
 				} = mapValues(v, v => isFunction(v) ? v.bind(this) : v);
 				let r = stored(key, options);
-				return {
+				computedProperties[k] = {
 					get() {
 						return r.value;
 					},
@@ -25,7 +27,10 @@ export default {
 						r.value = v;
 					},
 				};
-			}));
+			});
+			Object.assign($options, {
+				computed: computedProperties,
+			});
 		}
 	},
 };

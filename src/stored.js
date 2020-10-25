@@ -1,11 +1,8 @@
-import {
-	computed,
-	isRef,
-} from 'vue-demi';
-import {isFunction} from '@vue/shared';
+import {computed} from 'vue-demi';
 
 import localStorage from './localStorage';
 import sessionStorage from './sessionStorage';
+import toGetter from './toGetter';
 import typeBoolean from './types/Boolean';
 import typeNumber from './types/Number';
 import typeString from './types/String';
@@ -15,15 +12,6 @@ export default function(key, {
 	session = false,
 	type = JSON,
 } = {}) {
-	let toGetter = (value => {
-		if (isFunction(value)) {
-			return value;
-		}
-		if (isRef(value)) {
-			return (() => value.value);
-		}
-		return (() => value);
-	});
 	let getKey = toGetter(key);
 	let getDefaultValue = toGetter(defaultValue);
 	let getSession = toGetter(session);
