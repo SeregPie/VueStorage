@@ -10,7 +10,8 @@ Works for Vue 2 & 3.
 
 ## dependencies
 
-- [Vue Demi](https://github.com/antfu/vue-demi)
+- [VueDemi](https://github.com/antfu/vue-demi)
+- [VueCompositionAPI](https://github.com/vuejs/composition-api) (for Vue 2)
 
 ## setup
 
@@ -82,7 +83,9 @@ import {createApp} from 'vue'
 import VueStorage from '@seregpie/vue-storage';
 
 let app = createApp({/*...*/});
-app.use(VueStorage);
+app.use(VueStorage, {
+  prefix: 'myApp/',
+});
 app.mount('body');
 ```
 
@@ -97,7 +100,7 @@ export default {
   stored: {
     displayedUserName: {
       key() {
-        return `myApp/users/${this.userId}/name`;
+        return `users/${this.userId}/name`;
       },
       type: String,
       default() {
@@ -107,6 +110,33 @@ export default {
   },
 };
 ```
+
+---
+
+If the `key` option is omitted, the property name is used instead.
+
+```javascript
+stored: {
+  backgroundColor: {
+    type: String,
+    default: '#fff',
+  },
+},
+```
+
+## plugin options
+
+```
+app.use(VueStorage, {
+  optionName: 'stored',
+  prefix: '',
+})
+```
+
+| argument | description |
+| ---: | :--- |
+| `optionName` | A string as the name of the component option that contains all the stored properties. |
+| `prefix` | A string as the prefix for each storage key. |
 
 ## API
 
@@ -130,6 +160,8 @@ Creates a reference to a stored item.
 | `session` | If `true`, the session storage is used instead of the local storage. Can also be a getter function or a `ref`. |
 
 Returns the created reference.
+
+---
 
 ```javascript
 let key = 'myApp/numbers';

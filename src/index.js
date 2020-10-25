@@ -2,14 +2,12 @@ import {isVue2} from 'vue-demi';
 
 import install from './install';
 import localStorage from './localStorage';
-import mixin from './mixin';
 import sessionStorage from './sessionStorage';
 import stored from './stored';
 
 export {
 	install,
 	localStorage,
-	mixin,
 	sessionStorage,
 	stored,
 };
