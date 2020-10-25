@@ -1,5 +1,5 @@
 export default {
-	stored(toVal, fromVal) {
-		return {...toVal, ...fromVal};
+	stored(to, from) {
+		return {...to, ...from};
 	},
 };
