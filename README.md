@@ -11,7 +11,6 @@ Works for Vue 2 & 3.
 ## dependencies
 
 - [VueDemi](https://github.com/antfu/vue-demi)
-- [VueCompositionAPI](https://github.com/vuejs/composition-api) (for Vue 2)
 
 ## setup
 
@@ -19,6 +18,8 @@ Works for Vue 2 & 3.
 
 ```shell
 npm i @seregpie/vue-storage
+
+npm i @vue/composition-api # if using Vue 2
 ```
 
 ---
