@@ -19,7 +19,6 @@ export default function({
 				[optionName]: storedProperties,
 			} = $options;
 			if (storedProperties) {
-				computedProperties = {...computedProperties};
 				Object.entries(storedProperties).forEach(([k, v]) => {
 					let {
 						key = k,
@@ -35,9 +34,6 @@ export default function({
 							r.value = v;
 						},
 					};
-				});
-				Object.assign($options, {
-					computed: computedProperties,
 				});
 			}
 		},
