@@ -2,10 +2,12 @@ import {computed} from 'vue-demi';
 
 import localStorage from './localStorage';
 import sessionStorage from './sessionStorage';
-import toGetter from './toGetter';
+
 import typeBoolean from './types/Boolean';
 import typeNumber from './types/Number';
 import typeString from './types/String';
+
+import toGetter from './utils/toGetter';
 
 export default function(key, {
 	default: defaultValue = null,

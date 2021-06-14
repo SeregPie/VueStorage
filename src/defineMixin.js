@@ -1,10 +1,11 @@
-import {isFunction} from '@vue/shared';
-
 import defaultOptionName from './defaultOptionName';
 import defaultPrefix from './defaultPrefix';
-import mapValues from './mapValues';
+
 import stored from './stored';
-import toGetter from './toGetter';
+
+import isFunction from './utils/isFunction';
+import mapValues from './utils/mapValues';
+import toGetter from './utils/toGetter';
 
 export default function({
 	optionName = defaultOptionName,

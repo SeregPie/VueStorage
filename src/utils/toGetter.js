@@ -1,5 +1,6 @@
 import {isRef} from 'vue-demi';
-import {isFunction} from '@vue/shared';
+
+import isFunction from './isFunction';
 
 export default function(value) {
 	if (isFunction(value)) {
