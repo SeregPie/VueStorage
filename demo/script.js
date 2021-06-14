@@ -1,4 +1,4 @@
-(function() {
+(() => {
 
 	new Vue({
 		el: '#App',
@@ -6,7 +6,7 @@
 		data() {
 			return {
 				items: ['🐭', '🐮', '🐯', '🐰', '🐱', '🐴', '🐵', '🐶', '🐷', '🐸', '🐹', '🐺', '🐻', '🐼', '🦁', '🦊'],
-				storageKey: 'remember',
+				storageKey: 'myAwesomeKey',
 			};
 		},
 		stored: {

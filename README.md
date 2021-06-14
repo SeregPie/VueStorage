@@ -62,7 +62,7 @@ export default {
   },
   setup(props) {
     let displayedUserName = stored(
-      () => `myApp/users/${props.userId}/name`,
+      () => `myAwesomeApp/users/${props.userId}/name`,
       {
         type: String,
         default: () => props.userName,
@@ -85,7 +85,7 @@ import VueStorage from '@seregpie/vue-storage';
 
 let app = createApp({/*...*/});
 app.use(VueStorage, {
-  prefix: 'myApp/',
+  prefix: 'myAwesomeApp/',
 });
 app.mount('body');
 ```
@@ -165,7 +165,7 @@ Returns the created reference.
 ---
 
 ```javascript
-let key = 'myApp/numbers';
+let key = 'myAwesomeApp/numbers';
 let r = stored(key, {
   type: {
     parse: (string => string.split('|').map(Number)),
@@ -185,14 +185,18 @@ console.log(localStorage.getItem(key)); // => null
 
 ### localStorage
 
+The reactive local storage.
+
 Uses the same API as [`window.localStorage`](https://developer.mozilla.org/docs/Web/API/Window/localStorage).
 
 ```javascript
-let key = 'myApp/backgroundColor';
+let key = 'myAwesomeApp/backgroundColor';
 let backgroundColor = localStorage.getItem(key);
 localStorage.removeItem(key);
 ```
 
 ### sessionStorage
+
+The reactive session storage.
 
 Uses the same API as [`window.sessionStorage`](https://developer.mozilla.org/docs/Web/API/Window/sessionStorage).
