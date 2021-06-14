@@ -1,19 +1,12 @@
-import StorageWrapper from './StorageWrapper';
+import createStorage from './createStorage';
 
-import customEffects from './utils/customEffects';
-import DummyStorage from './utils/DummyStorage';
-
-let effects = customEffects();
-
-let storage = (() => {
+export default (() => {
 	let {window} = globalThis;
 	if (window) {
 		let {sessionStorage} = window;
-		if (localStorage) {
-			return sessionStorage;
+		if (sessionStorage) {
+			return createStorage(sessionStorage);
 		}
 	}
-	return new DummyStorage();
+	return createStorage();
 })();
-
-export default new StorageWrapper(storage, effects);
