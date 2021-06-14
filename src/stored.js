@@ -21,8 +21,8 @@ export default function(key, {
 	let {
 		parse,
 		stringify,
-	} = (value => {
-		switch (value) {
+	} = (v => {
+		switch (v) {
 			case Boolean:
 				return typeBoolean;
 			case Number:
@@ -30,7 +30,7 @@ export default function(key, {
 			case String:
 				return typeString;
 		}
-		return value;
+		return v;
 	})(type);
 	return computed({
 		get() {

@@ -1,23 +1,22 @@
-import Storage from './Storage';
+import StorageWrapper from './StorageWrapper';
 
-export default (() => {
+import customEffects from './utils/customEffects';
+import DummyStorage from './utils/DummyStorage';
+
+let effects = customEffects();
+
+let storage = (() => {
 	let {window} = globalThis;
 	if (window) {
 		let {localStorage} = window;
 		if (localStorage) {
-			let that = new Storage(localStorage);
-			window.addEventListener('storage', ({
-				key,
-				newValue,
-			}) => {
-				if (newValue == null) {
-					that._removeItem(key);
-				} else {
-					that._setItem(key, newValue);
-				}
+			window.addEventListener('storage', ({key}) => {
+				effects.trigger(key);
 			});
-			return that;
+			return localStorage;
 		}
 	}
-	return new Storage();
+	return new DummyStorage();
 })();
+
+export default new StorageWrapper(storage, effects);
